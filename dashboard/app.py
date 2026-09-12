@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 import os
 
 # --- PAGE CONFIGURATION ---
@@ -66,69 +67,7 @@ st.markdown("""
         border-radius: 4px;
     }
 
-    /* Top Executive Navigation Bar */
-    .top-navbar {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 14px 24px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    }
-
-    .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .nav-title {
-        font-size: 18px;
-        font-weight: 800;
-        color: #0F172A;
-        letter-spacing: -0.4px;
-    }
-
-    .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: #ECFDF5;
-        border: 1px solid #A7F3D0;
-        color: #047857;
-        font-size: 12px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 20px;
-    }
-
-    .status-dot {
-        width: 6px;
-        height: 6px;
-        background-color: #10B981;
-        border-radius: 50%;
-    }
-
-    .model-badge {
-        background: #F1F5F9;
-        border: 1px solid #CBD5E1;
-        color: #475569;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 6px;
-    }
-
-    /* Executive KPI Cards (Linear/Stripe Style) */
+    /* Executive KPI Cards */
     .kpi-card {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
@@ -223,28 +162,272 @@ st.markdown("""
         align-items: center;
         justify-content: space-between;
     }
-
-    /* Custom Table Styling */
-    .dataframe {
-        font-size: 12px !important;
-        border-radius: 8px !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- TOP EXECUTIVE NAVIGATION BAR ---
-st.markdown("""
-<div class="top-navbar">
-    <div class="nav-left">
-        <div class="nav-title">Airline Revenue & Pricing Intelligence</div>
-        <span class="brand-badge">v3.2 PROD</span>
-    </div>
-    <div class="nav-right">
-        <div class="status-pill"><span class="status-dot"></span> 300,153 FLIGHTS AUDITED</div>
-        <div class="model-badge">ML BENCHMARK R² 91.29%</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+# --- THREE.JS 3D FLIGHT HERO CANVAS ---
+def render_3d_hero_header():
+    three_js_code = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                background: transparent;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+            #hero-container {
+                width: 100%;
+                height: 220px;
+                position: relative;
+                border-radius: 14px;
+                overflow: hidden;
+                background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+                border: 1px solid #334155;
+                box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+            }
+            .hero-overlay {
+                position: absolute;
+                top: 22px;
+                left: 26px;
+                z-index: 10;
+                pointer-events: none;
+            }
+            .hero-tag {
+                display: inline-block;
+                background: rgba(56, 189, 248, 0.15);
+                border: 1px solid #38BDF8;
+                color: #38BDF8;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 3px 10px;
+                border-radius: 4px;
+                letter-spacing: 1.5px;
+                margin-bottom: 6px;
+                text-transform: uppercase;
+            }
+            .hero-title {
+                color: #FFFFFF;
+                font-size: 22px;
+                font-weight: 800;
+                letter-spacing: -0.3px;
+                margin: 0;
+            }
+            .hero-sub {
+                color: #94A3B8;
+                font-size: 13px;
+                margin-top: 4px;
+            }
+            .hero-badge-panel {
+                position: absolute;
+                top: 22px;
+                right: 26px;
+                z-index: 10;
+                text-align: right;
+                pointer-events: none;
+            }
+            .badge-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: #064E3B;
+                border: 1px solid #059669;
+                color: #34D399;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 10px;
+                border-radius: 6px;
+            }
+            .badge-dot {
+                width: 6px;
+                height: 6px;
+                background-color: #34D399;
+                border-radius: 50%;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    </head>
+    <body>
+        <div id="hero-container">
+            <div class="hero-overlay">
+                <div class="hero-tag">ENTERPRISE 3D FLIGHT COMMAND</div>
+                <h1 class="hero-title">Airline Revenue Leakage & Pricing Intelligence</h1>
+                <div class="hero-sub">ML Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
+            </div>
+            <div class="hero-badge-panel">
+                <div class="badge-pill"><span class="badge-dot"></span>SYSTEM ONLINE</div>
+                <div style="color: #64748B; font-size: 11px; font-weight: 600; margin-top: 6px;">300,153 FLIGHTS | R² 91.29%</div>
+            </div>
+        </div>
+
+        <script>
+            const container = document.getElementById('hero-container');
+            const scene = new THREE.Scene();
+
+            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 1.8, 8.5);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Lighting setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+            scene.add(ambientLight);
+
+            const sunLight = new THREE.DirectionalLight(0xF8FAFC, 2.2);
+            sunLight.position.set(8, 12, 10);
+            scene.add(sunLight);
+
+            const fillLight = new THREE.DirectionalLight(0x38BDF8, 1.0);
+            fillLight.position.set(-8, -4, -6);
+            scene.add(fillLight);
+
+            // Subtle Grid Floor
+            const gridHelper = new THREE.GridHelper(24, 24, 0x38BDF8, 0x334155);
+            gridHelper.position.y = -1.8;
+            scene.add(gridHelper);
+
+            // === SLEEK 3D COMMERCIAL JET AIRPLANE ===
+            const airlinerGroup = new THREE.Group();
+
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, metalness: 0.6, roughness: 0.2 });
+            const blueMat = new THREE.MeshStandardMaterial({ color: 0x1E3A8A, metalness: 0.7, roughness: 0.3 });
+            const engineMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8, roughness: 0.2 });
+            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0F172A, metalness: 0.9, roughness: 0.1 });
+
+            // 1. Fuselage
+            const fuseGeo = new THREE.CylinderGeometry(0.45, 0.45, 4.0, 32);
+            fuseGeo.rotateX(Math.PI / 2);
+            const fuselage = new THREE.Mesh(fuseGeo, bodyMat);
+            airlinerGroup.add(fuselage);
+
+            // 2. Nose Radome Cone
+            const noseGeo = new THREE.SphereGeometry(0.45, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const nose = new THREE.Mesh(noseGeo, bodyMat);
+            nose.rotation.x = -Math.PI / 2;
+            nose.position.set(0, 0, 2.0);
+            airlinerGroup.add(nose);
+
+            // 3. Cockpit Glass Window
+            const cockpitGeo = new THREE.SphereGeometry(0.455, 32, 16, 0, Math.PI, 0.3, 0.6);
+            const cockpit = new THREE.Mesh(cockpitGeo, glassMat);
+            cockpit.rotation.x = -Math.PI / 2;
+            cockpit.rotation.z = Math.PI / 2;
+            cockpit.position.set(0, 0.04, 1.75);
+            airlinerGroup.add(cockpit);
+
+            // 4. Tail Cone
+            const tailConeGeo = new THREE.ConeGeometry(0.45, 1.2, 32);
+            tailConeGeo.rotateX(-Math.PI / 2);
+            const tailCone = new THREE.Mesh(tailConeGeo, bodyMat);
+            tailCone.position.set(0, 0, -2.6);
+            airlinerGroup.add(tailCone);
+
+            // 5. Main Swept Wings
+            const wingShape = new THREE.Shape();
+            wingShape.moveTo(0, 0.3);
+            wingShape.lineTo(3.6, -1.4);
+            wingShape.lineTo(3.4, -2.0);
+            wingShape.lineTo(0, -0.6);
+            wingShape.closePath();
+
+            const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
+            
+            const rightWing = new THREE.Mesh(wingGeo, bodyMat);
+            rightWing.rotation.x = Math.PI / 2;
+            rightWing.position.set(0, 0, 0.2);
+            airlinerGroup.add(rightWing);
+
+            const leftWing = rightWing.clone();
+            leftWing.scale.set(-1, 1, 1);
+            airlinerGroup.add(leftWing);
+
+            // Winglets
+            const wingletShape = new THREE.Shape();
+            wingletShape.moveTo(0, 0);
+            wingletShape.lineTo(0, 0.55);
+            wingletShape.lineTo(-0.2, 0.35);
+            wingletShape.lineTo(-0.3, 0);
+            wingletShape.closePath();
+
+            const wingletGeo = new THREE.ExtrudeGeometry(wingletShape, { depth: 0.03, bevelEnabled: false });
+            const rWinglet = new THREE.Mesh(wingletGeo, blueMat);
+            rWinglet.position.set(3.55, 0, -1.2);
+            airlinerGroup.add(rWinglet);
+
+            const lWinglet = rWinglet.clone();
+            lWinglet.position.set(-3.55, 0, -1.2);
+            lWinglet.scale.set(-1, 1, 1);
+            airlinerGroup.add(lWinglet);
+
+            // 6. Turbofan Engines
+            const engineCylGeo = new THREE.CylinderGeometry(0.22, 0.2, 1.1, 24);
+            engineCylGeo.rotateX(Math.PI / 2);
+            
+            const rEngine = new THREE.Mesh(engineCylGeo, engineMat);
+            rEngine.position.set(1.3, -0.38, 0.1);
+            airlinerGroup.add(rEngine);
+
+            const lEngine = rEngine.clone();
+            lEngine.position.set(-1.3, -0.38, 0.1);
+            airlinerGroup.add(lEngine);
+
+            // 7. Vertical Tail Fin
+            const tailFinShape = new THREE.Shape();
+            tailFinShape.moveTo(0, 0);
+            tailFinShape.lineTo(0, 1.5);
+            tailFinShape.lineTo(-0.85, 1.2);
+            tailFinShape.lineTo(-1.4, 0);
+            tailFinShape.closePath();
+
+            const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
+            const tailFin = new THREE.Mesh(tailFinGeo, blueMat);
+            tailFin.position.set(0, 0.3, -2.0);
+            airlinerGroup.add(tailFin);
+
+            scene.add(airlinerGroup);
+
+            // 3D Airplane Positioning
+            airlinerGroup.position.set(2.7, 0.1, 0.4);
+            airlinerGroup.rotation.y = -0.52;
+            airlinerGroup.rotation.x = 0.22;
+            airlinerGroup.rotation.z = -0.12;
+
+            // Render Loop
+            let clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                const t = clock.getElapsedTime();
+
+                // Flight Motion
+                airlinerGroup.position.y = 0.1 + Math.sin(t * 1.4) * 0.16;
+                airlinerGroup.rotation.y = -0.52 + Math.sin(t * 0.6) * 0.03;
+                airlinerGroup.rotation.z = -0.12 + Math.cos(t * 0.8) * 0.02;
+
+                gridHelper.rotation.y = t * 0.03;
+
+                renderer.render(scene, camera);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            animate();
+        </script>
+    </body>
+    </html>
+    """
+    components.html(three_js_code, height=230)
+
+# Render 3D Hero Header
+render_3d_hero_header()
 
 # --- DATA LOADING WITH CACHING ---
 @st.cache_data
