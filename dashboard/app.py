@@ -3,27 +3,27 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import streamlit.components.v1 as components
 import os
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="Airline Revenue & Pricing Intelligence Console",
+    page_title="Airline Revenue & Pricing Intelligence",
+    page_icon="✈️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- CUSTOM BESPOKE EXECUTIVE COCKPIT THEME ---
+# --- ENTERPRISE EXECUTIVE STYLING ---
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-    /* Global Background & Typography */
+    /* Global Page Dark Theme */
     .stApp {
-        background-color: #080C14;
-        color: #E2E8F0;
+        background-color: #0B0F19;
+        color: #F1F5F9;
         font-family: 'Inter', sans-serif;
     }
     
@@ -34,15 +34,15 @@ st.markdown("""
     
     /* Sidebar Styling */
     section[data-testid="stSidebar"] {
-        background: #0D1322 !important;
+        background: #111827 !important;
         border-right: 1px solid #1E293B !important;
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
     }
     
     .sidebar-brand-card {
-        background: linear-gradient(180deg, #182238 0%, #0F172A 100%);
-        border: 1px solid #26354A;
-        border-radius: 10px;
+        background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid #334155;
+        border-radius: 12px;
         padding: 18px 14px;
         text-align: center;
         margin-bottom: 22px;
@@ -65,28 +65,104 @@ st.markdown("""
         margin-top: 4px;
     }
 
-    /* Bespoke Executive Telemetry Metric Cards */
-    .telemetry-card {
-        background: #0F172A;
-        border: 1px solid #1E293B;
-        border-radius: 12px;
-        padding: 16px 14px;
+    /* Enterprise Hero Banner */
+    .hero-banner {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 50%, #090D16 100%);
+        border: 1px solid #334155;
+        border-radius: 16px;
+        padding: 24px 30px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
         position: relative;
         overflow: hidden;
-        transition: all 0.25s ease;
+    }
+
+    .hero-banner::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-title-tag {
+        display: inline-block;
+        background: #182238;
+        border: 1px solid #26354A;
+        color: #38BDF8;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 6px;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .hero-main-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        color: #F8FAFC;
+        margin: 0;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-subtitle {
+        color: #94A3B8;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+
+    .hero-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #064E3B;
+        border: 1px solid #059669;
+        color: #34D399;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 8px;
+    }
+
+    .status-pulse {
+        width: 8px;
+        height: 8px;
+        background-color: #34D399;
+        border-radius: 50%;
+    }
+
+    /* Executive Telemetry Metric Cards */
+    .telemetry-card {
+        background: #131C2E;
+        border: 1px solid #1E293B;
+        border-radius: 14px;
+        padding: 18px 16px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     }
     
     .telemetry-card:hover {
         border-color: #38BDF8;
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
     }
 
     .telemetry-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
 
     .telemetry-title {
@@ -99,9 +175,9 @@ st.markdown("""
     }
 
     .telemetry-tag {
-        font-size: 9px;
+        font-size: 10px;
         font-weight: 700;
-        padding: 2px 6px;
+        padding: 2px 8px;
         border-radius: 4px;
         letter-spacing: 0.5px;
         background: #1E293B;
@@ -110,10 +186,10 @@ st.markdown("""
 
     .telemetry-value {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 25px;
+        font-size: 26px;
         font-weight: 800;
         color: #F8FAFC;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
 
     .telemetry-footer {
@@ -123,13 +199,12 @@ st.markdown("""
         justify-content: space-between;
     }
 
-    /* Progress Indicator Bar inside Cards */
     .progress-bar-bg {
         width: 100%;
         height: 4px;
         background: #1E293B;
         border-radius: 2px;
-        margin-top: 8px;
+        margin-top: 10px;
         overflow: hidden;
     }
     
@@ -140,20 +215,20 @@ st.markdown("""
 
     /* Tabs Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 6px;
-        background: #0D1322;
+        gap: 8px;
+        background: #111827;
         padding: 6px;
-        border-radius: 10px;
+        border-radius: 12px;
         border: 1px solid #1E293B;
     }
 
     .stTabs [data-baseweb="tab"] {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 600;
-        font-size: 13px;
+        font-size: 14px;
         color: #94A3B8;
         border-radius: 8px;
-        padding: 8px 16px;
+        padding: 10px 20px;
         border: none !important;
         transition: all 0.2s ease;
     }
@@ -162,18 +237,19 @@ st.markdown("""
         background: #1E293B !important;
         color: #38BDF8 !important;
         border: 1px solid #334155 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     /* Section Headers */
     .section-header {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 700;
         color: #F8FAFC;
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 14px;
+        margin-bottom: 16px;
     }
 
     .section-badge {
@@ -182,312 +258,40 @@ st.markdown("""
         color: #38BDF8;
         font-size: 10px;
         font-weight: 700;
-        padding: 2px 8px;
+        padding: 3px 9px;
         border-radius: 4px;
         letter-spacing: 0.5px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0B0F19;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 3px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- THREE.JS REALISTIC COMMERCIAL AIRLINER CANVAS ---
-def render_3d_flight_control_hero():
-    three_js_code = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <style>
-            body {
-                margin: 0;
-                overflow: hidden;
-                background: transparent;
-                font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-            }
-            #canvas-container {
-                width: 100%;
-                height: 250px;
-                position: relative;
-                border-radius: 12px;
-                overflow: hidden;
-                background: radial-gradient(ellipse at center, #0F172A 0%, #080C14 100%);
-                border: 1px solid #1E293B;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            }
-            .hud-overlay {
-                position: absolute;
-                top: 18px;
-                left: 24px;
-                z-index: 10;
-                pointer-events: none;
-            }
-            .hud-tag {
-                display: inline-block;
-                background: #182238;
-                border: 1px solid #26354A;
-                color: #38BDF8;
-                font-size: 10px;
-                font-weight: 700;
-                padding: 3px 10px;
-                border-radius: 4px;
-                letter-spacing: 1.5px;
-                margin-bottom: 6px;
-                text-transform: uppercase;
-            }
-            .hud-main-title {
-                color: #F8FAFC;
-                font-size: 22px;
-                font-weight: 800;
-                letter-spacing: 0.5px;
-                margin: 0;
-            }
-            .hud-sub-title {
-                color: #94A3B8;
-                font-size: 13px;
-                margin-top: 4px;
-            }
-            .hud-status-panel {
-                position: absolute;
-                top: 18px;
-                right: 24px;
-                z-index: 10;
-                text-align: right;
-                pointer-events: none;
-            }
-            .status-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                background: #064E3B;
-                border: 1px solid #059669;
-                color: #34D399;
-                font-size: 11px;
-                font-weight: 700;
-                padding: 4px 10px;
-                border-radius: 6px;
-                letter-spacing: 0.5px;
-            }
-            .status-dot {
-                width: 6px;
-                height: 6px;
-                background-color: #34D399;
-                border-radius: 50%;
-            }
-        </style>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    </head>
-    <body>
-        <div id="canvas-container">
-            <div class="hud-overlay">
-                <div class="hud-tag">FLIGHT DISPATCH & YIELD COMMAND</div>
-                <h1 class="hud-main-title">Airline Revenue Leakage & Pricing Intelligence</h1>
-                <div class="hud-sub-title">Machine Learning Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
-            </div>
-            <div class="hud-status-panel">
-                <div class="status-badge"><span class="status-dot"></span>ANALYTICS ENGINE ONLINE</div>
-                <div style="color: #64748B; font-size: 11px; font-weight: 600; margin-top: 6px;">COVERAGE: 300,153 METRO FLIGHTS</div>
-            </div>
-        </div>
-
-        <script>
-            const container = document.getElementById('canvas-container');
-            const scene = new THREE.Scene();
-
-            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.set(0, 1.8, 9.5);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            // Lighting setup for realistic airliner shading
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
-            scene.add(ambientLight);
-
-            const mainSun = new THREE.DirectionalLight(0xFFFFFF, 2.5);
-            mainSun.position.set(8, 12, 10);
-            scene.add(mainSun);
-
-            const fillSky = new THREE.DirectionalLight(0x38BDF8, 1.0);
-            fillSky.position.set(-8, -4, -6);
-            scene.add(fillSky);
-
-            // Subtle Grid Floor
-            const gridHelper = new THREE.GridHelper(26, 26, 0x38BDF8, 0x1E293B);
-            gridHelper.position.y = -1.8;
-            scene.add(gridHelper);
-
-            // === REALISTIC COMMERCIAL PASSSENGER AIRLINER GROUP ===
-            const airlinerGroup = new THREE.Group();
-
-            // Metallic White/Navy Airliner Material
-            const bodyMat = new THREE.MeshStandardMaterial({ 
-                color: 0xE2E8F0, 
-                metalness: 0.6, 
-                roughness: 0.25 
-            });
-            const darkBlueMat = new THREE.MeshStandardMaterial({ 
-                color: 0x1E3A8A, 
-                metalness: 0.7, 
-                roughness: 0.3 
-            });
-            const engineMat = new THREE.MeshStandardMaterial({ 
-                color: 0x334155, 
-                metalness: 0.85, 
-                roughness: 0.2 
-            });
-            const glassMat = new THREE.MeshStandardMaterial({ 
-                color: 0x0F172A, 
-                metalness: 0.9, 
-                roughness: 0.1 
-            });
-
-            // 1. Fuselage Main Tube (Cylinder along Z axis)
-            const fuseGeo = new THREE.CylinderGeometry(0.48, 0.48, 4.2, 32);
-            fuseGeo.rotateX(Math.PI / 2);
-            const fuselage = new THREE.Mesh(fuseGeo, bodyMat);
-            airlinerGroup.add(fuselage);
-
-            // 2. Rounded Nose Cone Radome (Front at +Z)
-            const noseGeo = new THREE.SphereGeometry(0.48, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-            const nose = new THREE.Mesh(noseGeo, bodyMat);
-            nose.rotation.x = -Math.PI / 2;
-            nose.position.set(0, 0, 2.1);
-            airlinerGroup.add(nose);
-
-            // 3. Cockpit Window Band
-            const cockpitGeo = new THREE.SphereGeometry(0.485, 32, 16, 0, Math.PI, 0.3, 0.6);
-            const cockpit = new THREE.Mesh(cockpitGeo, glassMat);
-            cockpit.rotation.x = -Math.PI / 2;
-            cockpit.rotation.z = Math.PI / 2;
-            cockpit.position.set(0, 0.04, 1.85);
-            airlinerGroup.add(cockpit);
-
-            // 4. Tail Cone (Rear at -Z)
-            const tailConeGeo = new THREE.ConeGeometry(0.48, 1.2, 32);
-            tailConeGeo.rotateX(-Math.PI / 2);
-            const tailCone = new THREE.Mesh(tailConeGeo, bodyMat);
-            tailCone.position.set(0, 0, -2.7);
-            airlinerGroup.add(tailCone);
-
-            // 5. Main Swept Wings (Left & Right)
-            const wingShape = new THREE.Shape();
-            wingShape.moveTo(0, 0.3);
-            wingShape.lineTo(3.8, -1.5);
-            wingShape.lineTo(3.6, -2.1);
-            wingShape.lineTo(0, -0.6);
-            wingShape.closePath();
-
-            const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
-            
-            const rightWing = new THREE.Mesh(wingGeo, bodyMat);
-            rightWing.rotation.x = Math.PI / 2;
-            rightWing.position.set(0, 0, 0.2);
-            airlinerGroup.add(rightWing);
-
-            const leftWing = rightWing.clone();
-            leftWing.scale.set(-1, 1, 1);
-            airlinerGroup.add(leftWing);
-
-            // Wingtip Winglets
-            const wingletShape = new THREE.Shape();
-            wingletShape.moveTo(0, 0);
-            wingletShape.lineTo(0, 0.6);
-            wingletShape.lineTo(-0.25, 0.4);
-            wingletShape.lineTo(-0.35, 0);
-            wingletShape.closePath();
-
-            const wingletGeo = new THREE.ExtrudeGeometry(wingletShape, { depth: 0.03, bevelEnabled: false });
-            const rWinglet = new THREE.Mesh(wingletGeo, darkBlueMat);
-            rWinglet.position.set(3.75, 0, -1.3);
-            airlinerGroup.add(rWinglet);
-
-            const lWinglet = rWinglet.clone();
-            lWinglet.position.set(-3.75, 0, -1.3);
-            lWinglet.scale.set(-1, 1, 1);
-            airlinerGroup.add(lWinglet);
-
-            // 6. Turbofan Jet Engines under Wings
-            const engineCylGeo = new THREE.CylinderGeometry(0.24, 0.22, 1.2, 24);
-            engineCylGeo.rotateX(Math.PI / 2);
-            
-            const rEngine = new THREE.Mesh(engineCylGeo, engineMat);
-            rEngine.position.set(1.4, -0.4, 0.1);
-            airlinerGroup.add(rEngine);
-
-            const lEngine = rEngine.clone();
-            lEngine.position.set(-1.4, -0.4, 0.1);
-            airlinerGroup.add(lEngine);
-
-            // 7. Vertical Tail Fin (Blue Accent)
-            const tailFinShape = new THREE.Shape();
-            tailFinShape.moveTo(0, 0);
-            tailFinShape.lineTo(0, 1.6);
-            tailFinShape.lineTo(-0.9, 1.3);
-            tailFinShape.lineTo(-1.5, 0);
-            tailFinShape.closePath();
-
-            const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
-            const tailFin = new THREE.Mesh(tailFinGeo, darkBlueMat);
-            tailFin.position.set(0, 0.3, -2.1);
-            airlinerGroup.add(tailFin);
-
-            // Horizontal Tail Stabilizers
-            const hTailShape = new THREE.Shape();
-            hTailShape.moveTo(0, 0);
-            hTailShape.lineTo(1.4, -0.6);
-            hTailShape.lineTo(1.3, -0.9);
-            hTailShape.lineTo(0, -0.4);
-            hTailShape.closePath();
-
-            const hTailGeo = new THREE.ExtrudeGeometry(hTailShape, { depth: 0.04, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.01 });
-            const rHTail = new THREE.Mesh(hTailGeo, bodyMat);
-            rHTail.rotation.x = Math.PI / 2;
-            rHTail.position.set(0, 0.1, -2.4);
-            airlinerGroup.add(rHTail);
-
-            const lHTail = rHTail.clone();
-            lHTail.scale.set(-1, 1, 1);
-            airlinerGroup.add(lHTail);
-
-            scene.add(airlinerGroup);
-
-            // === POSITIONING & ANGLE FOR PERFECT COMMERCIAL AIRLINER VIEW ===
-            airlinerGroup.position.set(2.8, 0.1, 0.5);
-            airlinerGroup.rotation.y = -0.55; // 3/4 Front-left angle showing nose, wings, engines & tail fin
-            airlinerGroup.rotation.x = 0.25;  // Slight roll/climb pitch up
-            airlinerGroup.rotation.z = -0.15; // Banking angle turn
-
-            // Smooth Flight Animation Loop
-            let clock = new THREE.Clock();
-            function animate() {
-                requestAnimationFrame(animate);
-                const t = clock.getElapsedTime();
-
-                // Realistic Flight Banking & Floating
-                airlinerGroup.position.y = 0.1 + Math.sin(t * 1.3) * 0.18;
-                airlinerGroup.rotation.y = -0.55 + Math.sin(t * 0.6) * 0.03;
-                airlinerGroup.rotation.z = -0.15 + Math.cos(t * 0.9) * 0.02;
-
-                gridHelper.rotation.y = t * 0.04;
-
-                renderer.render(scene, camera);
-            }
-
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            animate();
-        </script>
-    </body>
-    </html>
-    """
-    components.html(three_js_code, height=265)
-
-# Render 3D Radar Hero
-render_3d_flight_control_hero()
+# --- ENTERPRISE HERO HEADER ---
+st.markdown("""
+<div class="hero-banner">
+    <div>
+        <div class="hero-title-tag">EXECUTIVE PRICING INTELLIGENCE ENGINE</div>
+        <h1 class="hero-main-title">Airline Revenue Leakage & Pricing Benchmark Console</h1>
+        <div class="hero-subtitle">ML Expected Fare Modeling | Segment Exposure Analytics | Dynamic Yield Optimization</div>
+    </div>
+    <div style="text-align: right;">
+        <div class="hero-status-pill"><span class="status-pulse"></span>SYSTEM ONLINE</div>
+        <div style="color: #64748B; font-size: 11px; font-weight: 600; margin-top: 8px;">300,153 FLIGHTS | MODEL R² 91.29%</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # --- DATA LOADING WITH CACHING ---
 @st.cache_data
@@ -504,16 +308,16 @@ except Exception as e:
     st.error(f"Error loading dataset. Please run the notebook export step first. Details: {e}")
     st.stop()
 
-# --- SIDEBAR CONTROL PANEL ---
+# --- SIDEBAR FILTERS ---
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-brand-card">
-        <div class="sidebar-brand-title">DISPATCH CONTROL</div>
-        <div class="sidebar-brand-sub">PRICING INTELLIGENCE SUITE</div>
+        <div class="sidebar-brand-title">PRICING CONTROL</div>
+        <div class="sidebar-brand-sub">EXECUTIVE SUITE</div>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<div style='color: #94A3B8; font-weight: 700; font-size: 11px; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;'>GLOBAL FILTERS</div>", unsafe_allow_html=True)
+    st.markdown("<div style='color: #F8FAFC; font-weight: 700; font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;'>FILTER PARAMETERS</div>", unsafe_allow_html=True)
     
     # Cabin Class Filter
     class_options = ["All"] + list(df['class'].unique())
@@ -533,9 +337,9 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("""
-    <div style='background: #0F172A; border: 1px solid #1E293B; border-radius: 8px; padding: 14px;'>
-        <div style='color: #38BDF8; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;'>BENCHMARK HYPOTHESIS</div>
-        <div style='color: #94A3B8; font-size: 11px; margin-top: 6px; line-height: 1.4;'>Long-haul flights in the 31+ Days booking window exhibit severe revenue leakage (-24% to -28%) due to static advance price floors.</div>
+    <div style='background: #131C2E; border: 1px solid #1E293B; border-radius: 10px; padding: 14px;'>
+        <div style='color: #38BDF8; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;'>EXECUTIVE NOTE</div>
+        <div style='color: #94A3B8; font-size: 11px; margin-top: 6px; line-height: 1.4;'>Long-haul flights in advance windows (31+ Days) exhibit ~24-28% price variance vs expected market benchmarks.</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -554,7 +358,7 @@ if selected_days and "All" not in selected_days:
 if selected_route_filter != "All":
     filtered_df = filtered_df[filtered_df['route'] == selected_route_filter]
 
-# --- BESPOKE EXECUTIVE TELEMETRY WIDGETS ---
+# --- EXECUTIVE TELEMETRY WIDGETS ---
 total_flights = len(filtered_df)
 avg_actual = filtered_df['price'].mean() if total_flights > 0 else 0
 avg_expected = filtered_df['expected_fare'].mean() if total_flights > 0 else 0
@@ -569,11 +373,11 @@ with k1:
     st.markdown(f"""
     <div class="telemetry-card">
         <div class="telemetry-header">
-            <span class="telemetry-title">FLIGHT VOLUME</span>
-            <span class="telemetry-tag">ACTIVE</span>
+            <span class="telemetry-title">TOTAL FLIGHTS</span>
+            <span class="telemetry-tag">COVERAGE</span>
         </div>
         <div class="telemetry-value">{total_flights:,}</div>
-        <div class="telemetry-footer"><span>Analyzed Segment</span><span>100%</span></div>
+        <div class="telemetry-footer"><span>Evaluated Segment</span><span>100%</span></div>
         <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%; background: #3B82F6;"></div></div>
     </div>
     """, unsafe_allow_html=True)
@@ -625,7 +429,7 @@ with k5:
     st.markdown(f"""
     <div class="telemetry-card">
         <div class="telemetry-header">
-            <span class="telemetry-title">EXPOSURE UPSIDE</span>
+            <span class="telemetry-title">REVENUE OPPORTUNITY</span>
             <span class="telemetry-tag" style="background: #064E3B; color: #34D399;">OPPORTUNITY</span>
         </div>
         <div class="telemetry-value" style="color: #34D399;">₹{total_exposure_crs:.2f} Cr</div>
@@ -637,11 +441,11 @@ with k5:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # --- PLOTLY EXECUTIVE CHART STYLING ---
-def style_plotly_chart(fig, height=360):
+def style_plotly_chart(fig, height=370):
     fig.update_layout(
         template="plotly_dark",
-        paper_bgcolor="#0F172A",
-        plot_bgcolor="#0F172A",
+        paper_bgcolor="#131C2E",
+        plot_bgcolor="#131C2E",
         font=dict(family="Inter, sans-serif", color="#94A3B8", size=12),
         margin=dict(l=20, r=20, t=35, b=20),
         height=height,
@@ -651,7 +455,7 @@ def style_plotly_chart(fig, height=360):
     )
     return fig
 
-# --- EXECUTIVE NAVIGATION TABS ---
+# --- NAVIGATION TABS ---
 tab1, tab2, tab3, tab4 = st.tabs([
     "Executive Summary", 
     "Route Yield Explorer", 
@@ -732,7 +536,7 @@ with tab2:
         yaxis_title="Average Fare (INR)",
         xaxis=dict(autorange="reversed")
     )
-    fig3 = style_plotly_chart(fig3, height=410)
+    fig3 = style_plotly_chart(fig3, height=420)
     st.plotly_chart(fig3, use_container_width=True)
 
 # --- TAB 3: COMPETITOR BENCHMARK ---
@@ -746,7 +550,7 @@ with tab3:
         labels={'price': 'Average Fare (INR)', 'days_bucket': 'Booking Window', 'airline': 'Airline'},
         color_discrete_sequence=['#2563EB', '#38BDF8', '#10B981', '#F59E0B', '#6366F1', '#EC4899']
     )
-    fig4 = style_plotly_chart(fig4, height=410)
+    fig4 = style_plotly_chart(fig4, height=420)
     st.plotly_chart(fig4, use_container_width=True)
 
 # --- TAB 4: WHAT-IF SCENARIO SIMULATOR ---
@@ -769,7 +573,7 @@ with tab4:
         rev_gain_crs = rev_gain_lakhs / 100
         
         st.markdown(f"""
-        <div style="background: #0F172A; border: 1px solid #1E293B; border-top: 3px solid #10B981; border-radius: 12px; padding: 22px; text-align: center; margin-top: 15px;">
+        <div style="background: #131C2E; border: 1px solid #1E293B; border-top: 3px solid #10B981; border-radius: 14px; padding: 22px; text-align: center; margin-top: 15px;">
             <div style="font-size: 11px; color: #94A3B8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">SIMULATED REVENUE UPSIDE</div>
             <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; font-weight: 800; color: #10B981; margin: 8px 0;">
                 +₹{rev_gain_crs:.2f} Cr
@@ -789,8 +593,8 @@ with tab4:
             color_discrete_map={'Current Revenue': '#2563EB', 'Simulated Revenue': '#10B981'},
             labels={'Revenue_Cr': 'Revenue (₹ Crores)'}
         )
-        fig5 = style_plotly_chart(fig5, height=290)
+        fig5 = style_plotly_chart(fig5, height=300)
         st.plotly_chart(fig5, use_container_width=True)
 
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: #64748B; font-size: 11px; font-family: monospace;'>AIRLINE REVENUE LEAKAGE & PRICING INTELLIGENCE // EXECUTIVE DISPATCH CONSOLE</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; color: #64748B; font-size: 11px; font-family: monospace;'>AIRLINE REVENUE LEAKAGE & PRICING INTELLIGENCE DASHBOARD</div>", unsafe_allow_html=True)
