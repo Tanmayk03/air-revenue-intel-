@@ -13,17 +13,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- ROYAL SAPPHIRE & CHAMPAGNE GOLD COLOR PALETTE ---
+# --- CRISP PREMIUM LIGHT MODE EXECUTIVE THEME ---
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-    /* Global Page Dark Theme - Deep Midnight Navy */
+    /* Global Page Light Background */
     .stApp {
-        background-color: #060B19;
-        color: #F8FAFC;
+        background-color: #F8FAFC;
+        color: #0F172A;
         font-family: 'Inter', sans-serif;
     }
     
@@ -32,52 +32,52 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Sidebar Styling */
+    /* Sidebar Styling - Light Slate */
     section[data-testid="stSidebar"] {
-        background: #0A1128 !important;
-        border-right: 1px solid #1E2942 !important;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+        background: #FFFFFF !important;
+        border-right: 1px solid #E2E8F0 !important;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.03);
     }
     
     .sidebar-brand-card {
-        background: linear-gradient(180deg, #101A36 0%, #060B19 100%);
-        border: 1px solid #2B3A67;
-        border-top: 2px solid #F59E0B;
+        background: linear-gradient(180deg, #F1F5F9 0%, #FFFFFF 100%);
+        border: 1px solid #E2E8F0;
+        border-top: 3px solid #2563EB;
         border-radius: 12px;
         padding: 18px 14px;
         text-align: center;
         margin-bottom: 22px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
     
     .sidebar-brand-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 15px;
         font-weight: 800;
-        color: #FBBF24;
+        color: #1E3A8A;
         letter-spacing: 1px;
         text-transform: uppercase;
     }
 
     .sidebar-brand-sub {
         font-size: 10px;
-        color: #94A3B8;
+        color: #64748B;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         margin-top: 4px;
     }
 
-    /* Enterprise Hero Banner - Royal Sapphire & Gold Accent */
+    /* Enterprise Hero Banner - Light Luxury Executive */
     .hero-banner {
-        background: linear-gradient(135deg, #101A36 0%, #162244 50%, #0A1128 100%);
-        border: 1px solid #2B3A67;
-        border-left: 4px solid #F59E0B;
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border: 1px solid #334155;
         border-radius: 16px;
         padding: 24px 30px;
         margin-bottom: 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
         position: relative;
         overflow: hidden;
     }
@@ -89,15 +89,15 @@ st.markdown("""
         right: -10%;
         width: 300px;
         height: 300px;
-        background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
         pointer-events: none;
     }
 
     .hero-title-tag {
         display: inline-block;
-        background: rgba(245, 158, 11, 0.12);
-        border: 1px solid #D97706;
-        color: #FBBF24;
+        background: rgba(56, 189, 248, 0.15);
+        border: 1px solid #38BDF8;
+        color: #38BDF8;
         font-size: 11px;
         font-weight: 700;
         padding: 4px 12px;
@@ -111,7 +111,7 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 24px;
         font-weight: 800;
-        color: #F8FAFC;
+        color: #FFFFFF;
         margin: 0;
         letter-spacing: 0.5px;
     }
@@ -126,9 +126,9 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(37, 99, 235, 0.2);
-        border: 1px solid #2563EB;
-        color: #60A5FA;
+        background: #064E3B;
+        border: 1px solid #059669;
+        color: #34D399;
         font-size: 12px;
         font-weight: 700;
         padding: 6px 14px;
@@ -138,26 +138,26 @@ st.markdown("""
     .status-pulse {
         width: 8px;
         height: 8px;
-        background-color: #60A5FA;
+        background-color: #34D399;
         border-radius: 50%;
     }
 
-    /* Executive Telemetry Metric Cards - Sapphire & Gold */
+    /* Crisp Light Executive Metric Cards */
     .telemetry-card {
-        background: #101A36;
-        border: 1px solid #2B3A67;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
         border-radius: 14px;
         padding: 18px 16px;
         position: relative;
         overflow: hidden;
         transition: all 0.2s ease-in-out;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
     
     .telemetry-card:hover {
-        border-color: #F59E0B;
+        border-color: #2563EB;
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
     }
 
     .telemetry-header {
@@ -170,7 +170,7 @@ st.markdown("""
     .telemetry-title {
         font-family: 'Inter', sans-serif;
         font-size: 11px;
-        color: #94A3B8;
+        color: #64748B;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.8px;
@@ -182,21 +182,21 @@ st.markdown("""
         padding: 2px 8px;
         border-radius: 4px;
         letter-spacing: 0.5px;
-        background: #1A284D;
-        color: #94A3B8;
+        background: #F1F5F9;
+        color: #475569;
     }
 
     .telemetry-value {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 26px;
         font-weight: 800;
-        color: #F8FAFC;
+        color: #0F172A;
         margin-bottom: 6px;
     }
 
     .telemetry-footer {
         font-size: 11px;
-        color: #94A3B8;
+        color: #64748B;
         display: flex;
         justify-content: space-between;
     }
@@ -204,7 +204,7 @@ st.markdown("""
     .progress-bar-bg {
         width: 100%;
         height: 4px;
-        background: #1A284D;
+        background: #F1F5F9;
         border-radius: 2px;
         margin-top: 10px;
         overflow: hidden;
@@ -215,20 +215,20 @@ st.markdown("""
         border-radius: 2px;
     }
 
-    /* Tabs Styling - Sapphire Blue & Gold Active */
+    /* Tabs Styling - Light Mode Crisp */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background: #0A1128;
+        background: #E2E8F0;
         padding: 6px;
         border-radius: 12px;
-        border: 1px solid #1E2942;
+        border: 1px solid #CBD5E1;
     }
 
     .stTabs [data-baseweb="tab"] {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 600;
         font-size: 14px;
-        color: #94A3B8;
+        color: #64748B;
         border-radius: 8px;
         padding: 10px 20px;
         border: none !important;
@@ -236,10 +236,10 @@ st.markdown("""
     }
 
     .stTabs [aria-selected="true"] {
-        background: #162244 !important;
-        color: #FBBF24 !important;
-        border: 1px solid #D97706 !important;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+        background: #FFFFFF !important;
+        color: #1D4ED8 !important;
+        border: 1px solid #2563EB !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     /* Section Headers */
@@ -247,7 +247,7 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-size: 17px;
         font-weight: 700;
-        color: #F8FAFC;
+        color: #0F172A;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -255,9 +255,9 @@ st.markdown("""
     }
 
     .section-badge {
-        background: rgba(245, 158, 11, 0.12);
-        border: 1px solid #D97706;
-        color: #FBBF24;
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        color: #1D4ED8;
         font-size: 10px;
         font-weight: 700;
         padding: 3px 9px;
@@ -271,10 +271,10 @@ st.markdown("""
         height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: #060B19;
+        background: #F8FAFC;
     }
     ::-webkit-scrollbar-thumb {
-        background: #2B3A67;
+        background: #CBD5E1;
         border-radius: 3px;
     }
 </style>
@@ -315,11 +315,11 @@ with st.sidebar:
     st.markdown("""
     <div class="sidebar-brand-card">
         <div class="sidebar-brand-title">PRICING CONTROL</div>
-        <div class="sidebar-brand-sub">ROYAL SAPPHIRE SUITE</div>
+        <div class="sidebar-brand-sub">LIGHT EXECUTIVE SUITE</div>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<div style='color: #F8FAFC; font-weight: 700; font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;'>FILTER PARAMETERS</div>", unsafe_allow_html=True)
+    st.markdown("<div style='color: #0F172A; font-weight: 700; font-size: 11px; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;'>FILTER PARAMETERS</div>", unsafe_allow_html=True)
     
     # Cabin Class Filter
     class_options = ["All"] + list(df['class'].unique())
@@ -339,9 +339,9 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("""
-    <div style='background: #101A36; border: 1px solid #2B3A67; border-radius: 10px; padding: 14px;'>
-        <div style='color: #FBBF24; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;'>EXECUTIVE NOTE</div>
-        <div style='color: #94A3B8; font-size: 11px; margin-top: 6px; line-height: 1.4;'>Long-haul flights in advance windows (31+ Days) exhibit ~24-28% price variance vs expected market benchmarks.</div>
+    <div style='background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px;'>
+        <div style='color: #1D4ED8; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;'>EXECUTIVE NOTE</div>
+        <div style='color: #475569; font-size: 11px; margin-top: 6px; line-height: 1.4;'>Long-haul flights in advance windows (31+ Days) exhibit ~24-28% price variance vs expected market benchmarks.</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -393,7 +393,7 @@ with k2:
         </div>
         <div class="telemetry-value">₹{avg_actual:,.0f}</div>
         <div class="telemetry-footer"><span>Mean Ticket Price</span><span>INR</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 75%; background: #60A5FA;"></div></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 75%; background: #64748B;"></div></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -402,17 +402,17 @@ with k3:
     <div class="telemetry-card">
         <div class="telemetry-header">
             <span class="telemetry-title">EXPECTED FARE</span>
-            <span class="telemetry-tag" style="background: rgba(245, 158, 11, 0.2); color: #FBBF24;">ML MODEL</span>
+            <span class="telemetry-tag" style="background: #EFF6FF; color: #1D4ED8;">ML MODEL</span>
         </div>
-        <div class="telemetry-value" style="color: #FBBF24;">₹{avg_expected:,.0f}</div>
+        <div class="telemetry-value" style="color: #1D4ED8;">₹{avg_expected:,.0f}</div>
         <div class="telemetry-footer"><span>Benchmark Baseline</span><span>R² 91%</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%; background: #F59E0B;"></div></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%; background: #2563EB;"></div></div>
     </div>
     """, unsafe_allow_html=True)
 
 with k4:
-    status_bg = "rgba(244, 63, 94, 0.2)" if overall_leakage < 0 else "rgba(16, 185, 129, 0.2)"
-    status_color = "#FB7185" if overall_leakage < 0 else "#34D399"
+    status_bg = "#FEF2F2" if overall_leakage < 0 else "#ECFDF5"
+    status_color = "#DC2626" if overall_leakage < 0 else "#059669"
     status_txt = "LEAKAGE" if overall_leakage < 0 else "OPTIMAL"
     
     st.markdown(f"""
@@ -432,28 +432,28 @@ with k5:
     <div class="telemetry-card">
         <div class="telemetry-header">
             <span class="telemetry-title">REVENUE OPPORTUNITY</span>
-            <span class="telemetry-tag" style="background: rgba(245, 158, 11, 0.2); color: #FBBF24;">OPPORTUNITY</span>
+            <span class="telemetry-tag" style="background: #ECFDF5; color: #059669;">OPPORTUNITY</span>
         </div>
-        <div class="telemetry-value" style="color: #FBBF24;">₹{total_exposure_crs:.2f} Cr</div>
+        <div class="telemetry-value" style="color: #059669;">₹{total_exposure_crs:.2f} Cr</div>
         <div class="telemetry-footer"><span>Uncaptured Revenue</span><span>Target</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%; background: #F59E0B;"></div></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%; background: #10B981;"></div></div>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- PLOTLY SAPPHIRE & GOLD CHART STYLING ---
+# --- PLOTLY LIGHT MODE CHART STYLING ---
 def style_plotly_chart(fig, height=370):
     fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="#101A36",
-        plot_bgcolor="#101A36",
-        font=dict(family="Inter, sans-serif", color="#94A3B8", size=12),
+        template="plotly_white",
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        font=dict(family="Inter, sans-serif", color="#475569", size=12),
         margin=dict(l=20, r=20, t=35, b=20),
         height=height,
-        xaxis=dict(gridcolor="#1E2942", zerolinecolor="#2B3A67"),
-        yaxis=dict(gridcolor="#1E2942", zerolinecolor="#2B3A67"),
-        legend=dict(bgcolor="#060B19", bordercolor="#2B3A67", borderwidth=1)
+        xaxis=dict(gridcolor="#F1F5F9", zerolinecolor="#E2E8F0"),
+        yaxis=dict(gridcolor="#F1F5F9", zerolinecolor="#E2E8F0"),
+        legend=dict(bgcolor="#F8FAFC", bordercolor="#E2E8F0", borderwidth=1)
     )
     return fig
 
@@ -480,7 +480,7 @@ with tab1:
             route_exp, x='exposure_lakhs', y='route', orientation='h',
             labels={'exposure_lakhs': 'Opportunity (₹ Lakhs)', 'route': 'Route'},
             color='exposure_lakhs',
-            color_continuous_scale=['#1D4ED8', '#D97706', '#FBBF24']
+            color_continuous_scale=['#93C5FD', '#2563EB', '#1E3A8A']
         )
         fig1.update_layout(yaxis={'categoryorder':'total ascending'}, coloraxis_showscale=False)
         fig1 = style_plotly_chart(fig1)
@@ -499,7 +499,7 @@ with tab1:
             bucket_summary, x='days_bucket', y='leakage_pct',
             labels={'days_bucket': 'Booking Window', 'leakage_pct': 'Leakage Score (%)'},
             color='leakage_pct',
-            color_continuous_scale=['#F43F5E', '#F59E0B', '#10B981']
+            color_continuous_scale=['#EF4444', '#F59E0B', '#10B981']
         )
         fig2 = style_plotly_chart(fig2)
         st.plotly_chart(fig2, use_container_width=True)
@@ -522,14 +522,14 @@ with tab2:
     fig3.add_trace(go.Scatter(
         x=curve_df['days_left'], y=curve_df['Actual_Price'],
         mode='lines+markers', name='Actual Realized Fare',
-        line=dict(color='#60A5FA', width=3),
-        marker=dict(size=6, color='#60A5FA')
+        line=dict(color='#2563EB', width=3),
+        marker=dict(size=6, color='#2563EB')
     ))
     fig3.add_trace(go.Scatter(
         x=curve_df['days_left'], y=curve_df['Expected_Benchmark'],
         mode='lines+markers', name='ML Expected Benchmark',
-        line=dict(color='#FBBF24', width=3, dash='dash'),
-        marker=dict(size=6, color='#FBBF24')
+        line=dict(color='#DC2626', width=3, dash='dash'),
+        marker=dict(size=6, color='#DC2626')
     ))
     
     fig3.update_layout(
@@ -550,7 +550,7 @@ with tab3:
     fig4 = px.bar(
         comp_df, x='days_bucket', y='price', color='airline', barmode='group',
         labels={'price': 'Average Fare (INR)', 'days_bucket': 'Booking Window', 'airline': 'Airline'},
-        color_discrete_sequence=['#2563EB', '#F59E0B', '#10B981', '#38BDF8', '#8B5CF6', '#EC4899']
+        color_discrete_sequence=['#2563EB', '#D97706', '#10B981', '#0EA5E9', '#7C3AED', '#DB2777']
     )
     fig4 = style_plotly_chart(fig4, height=420)
     st.plotly_chart(fig4, use_container_width=True)
@@ -575,12 +575,12 @@ with tab4:
         rev_gain_crs = rev_gain_lakhs / 100
         
         st.markdown(f"""
-        <div style="background: #101A36; border: 1px solid #2B3A67; border-top: 3px solid #F59E0B; border-radius: 14px; padding: 22px; text-align: center; margin-top: 15px;">
-            <div style="font-size: 11px; color: #94A3B8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">SIMULATED REVENUE UPSIDE</div>
-            <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; font-weight: 800; color: #FBBF24; margin: 8px 0;">
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-top: 3px solid #10B981; border-radius: 14px; padding: 22px; text-align: center; margin-top: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+            <div style="font-size: 11px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">SIMULATED REVENUE UPSIDE</div>
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; font-weight: 800; color: #059669; margin: 8px 0;">
                 +₹{rev_gain_crs:.2f} Cr
             </div>
-            <div style="font-size: 12px; color: #60A5FA;">(₹{rev_gain_lakhs:,.2f} Lakhs with +{adjustment_pct}% Price Floor Step)</div>
+            <div style="font-size: 12px; color: #2563EB;">(₹{rev_gain_lakhs:,.2f} Lakhs with +{adjustment_pct}% Price Floor Step)</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -592,11 +592,11 @@ with tab4:
         
         fig5 = px.bar(
             sim_summary, x='Scenario', y='Revenue_Cr', color='Scenario',
-            color_discrete_map={'Current Revenue': '#2563EB', 'Simulated Revenue': '#F59E0B'},
+            color_discrete_map={'Current Revenue': '#2563EB', 'Simulated Revenue': '#10B981'},
             labels={'Revenue_Cr': 'Revenue (₹ Crores)'}
         )
         fig5 = style_plotly_chart(fig5, height=300)
         st.plotly_chart(fig5, use_container_width=True)
 
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: #94A3B8; font-size: 11px; font-family: monospace;'>AIRLINE REVENUE LEAKAGE & PRICING INTELLIGENCE DASHBOARD</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; color: #64748B; font-size: 11px; font-family: monospace;'>AIRLINE REVENUE LEAKAGE & PRICING INTELLIGENCE DASHBOARD</div>", unsafe_allow_html=True)
