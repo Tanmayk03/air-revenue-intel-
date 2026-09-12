@@ -165,9 +165,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- THREE.JS HIGH-DEFINITION AIRLINER JET HERO ---
+# --- HIGH-DEFINITION ANIMATED COMMERCIAL AIRPLANE HUD HERO ---
 def render_3d_hero_header():
-    three_js_code = """
+    airplane_hud_html = """
     <!DOCTYPE html>
     <html>
     <head>
@@ -180,20 +180,22 @@ def render_3d_hero_header():
             }
             #hero-container {
                 width: 100%;
-                height: 240px;
+                height: 220px;
                 position: relative;
                 border-radius: 14px;
                 overflow: hidden;
                 background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
                 border: 1px solid #334155;
                 box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 30px;
+                box-sizing: border-box;
             }
-            .hero-overlay {
-                position: absolute;
-                top: 22px;
-                left: 26px;
+            .hero-left {
+                max-width: 55%;
                 z-index: 10;
-                pointer-events: none;
             }
             .hero-tag {
                 display: inline-block;
@@ -205,7 +207,7 @@ def render_3d_hero_header():
                 padding: 3px 10px;
                 border-radius: 4px;
                 letter-spacing: 1.5px;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
                 text-transform: uppercase;
             }
             .hero-title {
@@ -218,16 +220,48 @@ def render_3d_hero_header():
             .hero-sub {
                 color: #94A3B8;
                 font-size: 13px;
-                margin-top: 4px;
+                margin-top: 6px;
             }
-            .hero-badge-panel {
+            
+            /* Realistic 3D Flight Telemetry Graphic */
+            .flight-graphic-container {
+                position: relative;
+                width: 320px;
+                height: 180px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Radar Compass Ring */
+            .radar-ring {
                 position: absolute;
-                top: 22px;
-                right: 26px;
-                z-index: 10;
-                text-align: right;
-                pointer-events: none;
+                width: 160px;
+                height: 160px;
+                border: 1px stroke rgba(56, 189, 248, 0.2);
+                border-radius: 50%;
+                border-top: 2px solid #38BDF8;
+                animation: spin 8s linear infinite;
             }
+            
+            @keyframes spin {
+                100% { transform: rotate(360deg); }
+            }
+
+            /* Floating Airliner Graphic */
+            .airliner-svg {
+                width: 220px;
+                height: 140px;
+                filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+                animation: floatFlight 3s ease-in-out infinite alternate;
+                transform: rotate(-5deg);
+            }
+
+            @keyframes floatFlight {
+                0% { transform: translateY(-5px) rotate(-4deg); }
+                100% { transform: translateY(8px) rotate(-7deg); }
+            }
+
             .badge-pill {
                 display: inline-flex;
                 align-items: center;
@@ -246,205 +280,83 @@ def render_3d_hero_header():
                 background-color: #34D399;
                 border-radius: 50%;
             }
+            .telemetry-overlay-box {
+                position: absolute;
+                bottom: 10px;
+                right: 20px;
+                background: rgba(15, 23, 42, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 4px 10px;
+                border-radius: 4px;
+                color: #38BDF8;
+                font-family: monospace;
+                font-size: 10px;
+            }
         </style>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     </head>
     <body>
         <div id="hero-container">
-            <div class="hero-overlay">
-                <div class="hero-tag">COMMERCIAL JET FLIGHT RADAR</div>
+            <div class="hero-left">
+                <div class="hero-tag">COMMERCIAL FLIGHT TELEMETRY HUD</div>
                 <h1 class="hero-title">Airline Revenue Leakage & Pricing Intelligence</h1>
                 <div class="hero-sub">ML Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
             </div>
-            <div class="hero-badge-panel">
-                <div class="badge-pill"><span class="badge-dot"></span>SYSTEM ONLINE</div>
-                <div style="color: #64748B; font-size: 11px; font-weight: 600; margin-top: 6px;">300,153 FLIGHTS | R² 91.29%</div>
+            
+            <div class="flight-graphic-container">
+                <div class="radar-ring"></div>
+                
+                <!-- CRYSTAL CLEAR COMMERCIAL JET AIRLINER SVG -->
+                <svg class="airliner-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Flight Vapor Trail -->
+                    <path d="M40 320 C 120 300, 200 280, 300 260" stroke="#38BDF8" stroke-width="3" stroke-dasharray="6 6" opacity="0.6"/>
+                    
+                    <!-- Commercial Jet Main Fuselage & Wings (Detailed Boeing/Airbus Silhouette) -->
+                    <g transform="translate(60, 80) scale(0.75)">
+                        <!-- Main Swept Wings -->
+                        <path d="M 240 180 L 100 320 L 130 335 L 260 210 Z" fill="#2563EB"/>
+                        <path d="M 260 170 L 400 320 L 370 335 L 240 200 Z" fill="#1D4ED8"/>
+                        
+                        <!-- Winglets -->
+                        <path d="M 100 320 L 95 300 L 115 325 Z" fill="#38BDF8"/>
+                        <path d="M 400 320 L 405 300 L 385 325 Z" fill="#38BDF8"/>
+                        
+                        <!-- Main Fuselage Tube -->
+                        <path d="M 250 40 C 275 40, 280 120, 280 340 C 280 380, 250 410, 250 410 C 250 410, 220 380, 220 340 C 220 120, 225 40, 250 40 Z" fill="#F8FAFC"/>
+                        
+                        <!-- Nose Radome Cone Tint -->
+                        <path d="M 250 40 C 265 40, 275 70, 275 100 L 225 100 C 225 70, 235 40, 250 40 Z" fill="#E2E8F0"/>
+                        
+                        <!-- Cockpit Glass Windows -->
+                        <path d="M 235 85 C 240 80, 260 80, 265 85 L 270 95 L 230 95 Z" fill="#0F172A"/>
+                        
+                        <!-- Dual Jet Turbofan Engines under wings -->
+                        <rect x="170" y="240" width="22" height="55" rx="10" fill="#334155"/>
+                        <rect x="308" y="240" width="22" height="55" rx="10" fill="#334155"/>
+                        <circle cx="181" cy="245" r="9" fill="#38BDF8"/>
+                        <circle cx="319" cy="245" r="9" fill="#38BDF8"/>
+                        
+                        <!-- Horizontal Tail Stabilizers -->
+                        <path d="M 250 360 L 160 410 L 170 425 L 250 385 Z" fill="#94A3B8"/>
+                        <path d="M 250 360 L 340 410 L 330 425 L 250 385 Z" fill="#64748B"/>
+                        
+                        <!-- Vertical Tail Fin (Blue Livery) -->
+                        <path d="M 250 310 L 250 420 L 244 420 L 244 310 Z" fill="#1E3A8A"/>
+                        <path d="M 250 330 L 250 420 L 256 420 L 250 330 Z" fill="#2563EB"/>
+                    </g>
+                </svg>
+
+                <div class="telemetry-overlay-box">
+                    <div><span class="badge-dot"></span> 300,153 FLIGHTS</div>
+                    <div style="color: #94A3B8; margin-top: 2px;">MODEL R²: 91.29%</div>
+                </div>
             </div>
         </div>
-
-        <script>
-            const container = document.getElementById('hero-container');
-            const scene = new THREE.Scene();
-
-            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.set(0, 2.0, 9.0);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            // Lighting setup for photorealistic airliner materials
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
-            scene.add(ambientLight);
-
-            const mainLight = new THREE.DirectionalLight(0xFFFFFF, 2.5);
-            mainLight.position.set(10, 15, 12);
-            scene.add(mainLight);
-
-            const skyLight = new THREE.DirectionalLight(0x38BDF8, 1.2);
-            skyLight.position.set(-10, -5, -8);
-            scene.add(skyLight);
-
-            // Grid Floor
-            const gridHelper = new THREE.GridHelper(26, 26, 0x38BDF8, 0x334155);
-            gridHelper.position.y = -2.0;
-            scene.add(gridHelper);
-
-            // === ACCURATE COMMERCIAL PASSSENGER JET AIRPLANE ===
-            const jetGroup = new THREE.Group();
-
-            const fuselageMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, metalness: 0.7, roughness: 0.2 });
-            const darkBlueMat = new THREE.MeshStandardMaterial({ color: 0x1E3A8A, metalness: 0.8, roughness: 0.2 });
-            const engineMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.9, roughness: 0.15 });
-            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0F172A, metalness: 0.95, roughness: 0.05 });
-
-            // 1. Main Fuselage Tube
-            const fuseGeo = new THREE.CylinderGeometry(0.5, 0.5, 4.4, 32);
-            fuseGeo.rotateX(Math.PI / 2);
-            const fuselage = new THREE.Mesh(fuseGeo, fuselageMat);
-            jetGroup.add(fuselage);
-
-            // 2. Rounded Nose Cone Radome (Front facing +Z)
-            const noseGeo = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-            const nose = new THREE.Mesh(noseGeo, fuselageMat);
-            nose.rotation.x = -Math.PI / 2;
-            nose.position.set(0, 0, 2.2);
-            jetGroup.add(nose);
-
-            // 3. Cockpit Windshield Wrapper
-            const cockpitGeo = new THREE.SphereGeometry(0.505, 32, 16, 0, Math.PI, 0.25, 0.55);
-            const cockpit = new THREE.Mesh(cockpitGeo, glassMat);
-            cockpit.rotation.x = -Math.PI / 2;
-            cockpit.rotation.z = Math.PI / 2;
-            cockpit.position.set(0, 0.05, 1.9);
-            jetGroup.add(cockpit);
-
-            // 4. Tail Taper Cone
-            const tailConeGeo = new THREE.ConeGeometry(0.5, 1.3, 32);
-            tailConeGeo.rotateX(-Math.PI / 2);
-            const tailCone = new THREE.Mesh(tailConeGeo, fuselageMat);
-            tailCone.position.set(0, 0, -2.85);
-            jetGroup.add(tailCone);
-
-            // 5. Main Swept Wings (Airbus / Boeing Passenger Wing Outline)
-            const wingShape = new THREE.Shape();
-            wingShape.moveTo(0, 0.4);
-            wingShape.lineTo(4.2, -1.6);
-            wingShape.lineTo(3.9, -2.3);
-            wingShape.lineTo(0, -0.7);
-            wingShape.closePath();
-
-            const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
-            
-            const rightWing = new THREE.Mesh(wingGeo, fuselageMat);
-            rightWing.rotation.x = Math.PI / 2;
-            rightWing.position.set(0, 0, 0.2);
-            jetGroup.add(rightWing);
-
-            const leftWing = rightWing.clone();
-            leftWing.scale.set(-1, 1, 1);
-            jetGroup.add(leftWing);
-
-            // Winglets (Wingtip Fins)
-            const wingletShape = new THREE.Shape();
-            wingletShape.moveTo(0, 0);
-            wingletShape.lineTo(0, 0.65);
-            wingletShape.lineTo(-0.3, 0.4);
-            wingletShape.lineTo(-0.4, 0);
-            wingletShape.closePath();
-
-            const wingletGeo = new THREE.ExtrudeGeometry(wingletShape, { depth: 0.03, bevelEnabled: false });
-            const rWinglet = new THREE.Mesh(wingletGeo, darkBlueMat);
-            rWinglet.position.set(4.15, 0, -1.4);
-            jetGroup.add(rWinglet);
-
-            const lWinglet = rWinglet.clone();
-            lWinglet.position.set(-4.15, 0, -1.4);
-            lWinglet.scale.set(-1, 1, 1);
-            jetGroup.add(lWinglet);
-
-            // 6. Dual Turbofan Engines Mounted Under Wings
-            const engineGeo = new THREE.CylinderGeometry(0.26, 0.24, 1.3, 24);
-            engineGeo.rotateX(Math.PI / 2);
-            
-            const rEngine = new THREE.Mesh(engineGeo, engineMat);
-            rEngine.position.set(1.5, -0.42, 0.1);
-            jetGroup.add(rEngine);
-
-            const lEngine = rEngine.clone();
-            lEngine.position.set(-1.5, -0.42, 0.1);
-            jetGroup.add(lEngine);
-
-            // 7. Vertical Tail Fin (Blue Livery Accent)
-            const tailFinShape = new THREE.Shape();
-            tailFinShape.moveTo(0, 0);
-            tailFinShape.lineTo(0, 1.7);
-            tailFinShape.lineTo(-1.0, 1.3);
-            tailFinShape.lineTo(-1.6, 0);
-            tailFinShape.closePath();
-
-            const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
-            const tailFin = new THREE.Mesh(tailFinGeo, darkBlueMat);
-            tailFin.position.set(0, 0.35, -2.2);
-            jetGroup.add(tailFin);
-
-            // Horizontal Stabilizers
-            const hTailShape = new THREE.Shape();
-            hTailShape.moveTo(0, 0);
-            hTailShape.lineTo(1.5, -0.65);
-            hTailShape.lineTo(1.4, -1.0);
-            hTailShape.lineTo(0, -0.45);
-            hTailShape.closePath();
-
-            const hTailGeo = new THREE.ExtrudeGeometry(hTailShape, { depth: 0.04, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.01 });
-            const rHTail = new THREE.Mesh(hTailGeo, fuselageMat);
-            rHTail.rotation.x = Math.PI / 2;
-            rHTail.position.set(0, 0.1, -2.5);
-            jetGroup.add(rHTail);
-
-            const lHTail = rHTail.clone();
-            lHTail.scale.set(-1, 1, 1);
-            jetGroup.add(lHTail);
-
-            scene.add(jetGroup);
-
-            // 3D Airplane View Angle (Unmistakable Commercial Jet Perspective)
-            jetGroup.position.set(3.0, 0.1, 0.5);
-            jetGroup.rotation.y = -0.55; // 3/4 Side-front angle showing full aircraft body
-            jetGroup.rotation.x = 0.24;  // Slight climb pitch angle
-            jetGroup.rotation.z = -0.14; // Banking turn angle
-
-            // Render Loop
-            let clock = new THREE.Clock();
-            function animate() {
-                requestAnimationFrame(animate);
-                const t = clock.getElapsedTime();
-
-                // Floating Flight Oscillations
-                jetGroup.position.y = 0.1 + Math.sin(t * 1.3) * 0.18;
-                jetGroup.rotation.y = -0.55 + Math.sin(t * 0.6) * 0.03;
-                jetGroup.rotation.z = -0.14 + Math.cos(t * 0.8) * 0.02;
-
-                gridHelper.rotation.y = t * 0.03;
-
-                renderer.render(scene, camera);
-            }
-
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            animate();
-        </script>
     </body>
     </html>
     """
-    components.html(three_js_code, height=245)
+    components.html(airplane_hud_html, height=230)
 
-# Render 3D Hero Header
+# Render Hero Header
 render_3d_hero_header()
 
 # --- DATA LOADING WITH CACHING ---
