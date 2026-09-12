@@ -189,7 +189,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- THREE.JS 3D FLIGHT RADAR & JET CANVAS ---
+# --- THREE.JS 3D FLIGHT RADAR & FRONT-VIEW JET CANVAS ---
 def render_3d_flight_control_hero():
     three_js_code = """
     <!DOCTYPE html>
@@ -204,7 +204,7 @@ def render_3d_flight_control_hero():
             }
             #canvas-container {
                 width: 100%;
-                height: 240px;
+                height: 245px;
                 position: relative;
                 border-radius: 12px;
                 overflow: hidden;
@@ -292,24 +292,24 @@ def render_3d_flight_control_hero():
             const scene = new THREE.Scene();
 
             const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.set(0, 3.5, 14);
+            camera.position.set(0, 2.5, 12);
 
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             container.appendChild(renderer.domElement);
 
-            // Ambient & Soft Lights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+            // Lighting setup for front-facing jet
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
             scene.add(ambientLight);
 
-            const sunLight = new THREE.DirectionalLight(0xF8FAFC, 1.5);
-            sunLight.position.set(10, 15, 10);
-            scene.add(sunLight);
+            const frontSunLight = new THREE.DirectionalLight(0xF8FAFC, 2.2);
+            frontSunLight.position.set(0, 10, 15);
+            scene.add(frontSunLight);
 
-            const blueLight = new THREE.DirectionalLight(0x2563EB, 1.0);
-            blueLight.position.set(-10, -5, -5);
-            scene.add(blueLight);
+            const sideLight = new THREE.DirectionalLight(0x38BDF8, 1.2);
+            sideLight.position.set(-10, 5, 5);
+            scene.add(sideLight);
 
             // 3D Animated Radar Grid Plane
             const gridHelper = new THREE.GridHelper(24, 24, 0x38BDF8, 0x1E293B);
@@ -319,38 +319,44 @@ def render_3d_flight_control_hero():
             // Sleek Jet Aircraft Construction
             const jetGroup = new THREE.Group();
 
-            const bodyGeo = new THREE.ConeGeometry(0.7, 5.8, 20);
-            bodyGeo.rotateX(Math.PI / 2);
+            // Fuselage (Cone Apex pointing forward towards viewer +Z)
+            const bodyGeo = new THREE.ConeGeometry(0.75, 5.8, 24);
+            // Rotate cone so apex points along +Z towards viewer
+            bodyGeo.rotateX(-Math.PI / 2);
+            
             const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1E293B, metalness: 0.85, roughness: 0.2 });
             const body = new THREE.Mesh(bodyGeo, bodyMat);
             jetGroup.add(body);
 
-            const glassGeo = new THREE.SphereGeometry(0.42, 16, 16);
-            glassGeo.scale(0.8, 0.5, 1.5);
-            const glassMat = new THREE.MeshStandardMaterial({ color: 0x38BDF8, metalness: 0.9, roughness: 0.1, transparent: true, opacity: 0.9 });
+            // Front Cockpit Glass Canopy
+            const glassGeo = new THREE.SphereGeometry(0.46, 16, 16);
+            glassGeo.scale(0.82, 0.52, 1.5);
+            const glassMat = new THREE.MeshStandardMaterial({ color: 0x38BDF8, metalness: 0.95, roughness: 0.1, transparent: true, opacity: 0.92 });
             const glass = new THREE.Mesh(glassGeo, glassMat);
-            glass.position.set(0, 0.35, 0.8);
+            glass.position.set(0, 0.38, 0.7);
             jetGroup.add(glass);
 
+            // Swept Wings (facing forward)
             const wingShape = new THREE.Shape();
             wingShape.moveTo(0, 0);
-            wingShape.lineTo(4.4, -1.8);
-            wingShape.lineTo(4.1, -2.5);
-            wingShape.lineTo(0, -1.0);
+            wingShape.lineTo(4.6, -1.8);
+            wingShape.lineTo(4.3, -2.6);
+            wingShape.lineTo(0, -0.9);
             wingShape.closePath();
 
             const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
             const wingMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.7, roughness: 0.3 });
             
             const rWing = new THREE.Mesh(wingGeo, wingMat);
-            rWing.rotation.x = Math.PI / 2;
-            rWing.position.set(0, 0, 0.4);
+            rWing.rotation.x = -Math.PI / 2;
+            rWing.position.set(0, 0, -0.2);
             jetGroup.add(rWing);
 
             const lWing = rWing.clone();
             lWing.scale.set(-1, 1, 1);
             jetGroup.add(lWing);
 
+            // Vertical Tail Fin
             const tailShape = new THREE.Shape();
             tailShape.moveTo(0, 0);
             tailShape.lineTo(0, 1.6);
@@ -361,15 +367,32 @@ def render_3d_flight_control_hero():
             const tailGeo = new THREE.ExtrudeGeometry(tailShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
             const tailMat = new THREE.MeshStandardMaterial({ color: 0x2563EB, metalness: 0.6, roughness: 0.3 });
             const tail = new THREE.Mesh(tailGeo, tailMat);
+            tail.rotation.y = Math.PI;
             tail.position.set(0, 0, -2.1);
             jetGroup.add(tail);
 
-            scene.add(jetGroup);
-            jetGroup.position.set(3.6, 0.2, 0);
-            jetGroup.rotation.y = -Math.PI / 5;
-            jetGroup.rotation.x = 0.1;
+            // Jet Engines
+            const engineGeo = new THREE.CylinderGeometry(0.28, 0.28, 1.5, 20);
+            engineGeo.rotateX(Math.PI / 2);
+            const engineMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.2 });
+            
+            const rEngine = new THREE.Mesh(engineGeo, engineMat);
+            rEngine.position.set(1.5, -0.3, -0.3);
+            jetGroup.add(rEngine);
 
-            // Animated Flight Trajectory Nodes (Metro Hubs)
+            const lEngine = rEngine.clone();
+            lEngine.position.set(-1.5, -0.3, -0.3);
+            jetGroup.add(lEngine);
+
+            scene.add(jetGroup);
+            
+            // POSITION & FRONT-QUARTER ROTATION TOWARDS USER
+            jetGroup.position.set(3.4, 0.1, 1.2);
+            jetGroup.rotation.y = -0.42;  // Angled nose cone towards user
+            jetGroup.rotation.x = 0.22;   // Pitched up to show top cockpit & wings
+            jetGroup.rotation.z = -0.12;  // Slight bank turn
+
+            // Flight Trajectory Nodes
             const nodeGeo = new THREE.SphereGeometry(0.12, 12, 12);
             const nodeMat = new THREE.MeshBasicMaterial({ color: 0x38BDF8 });
             
@@ -389,11 +412,11 @@ def render_3d_flight_control_hero():
                 requestAnimationFrame(animate);
                 const t = clock.getElapsedTime();
 
-                // Smooth Jet Altitude Oscillations
-                jetGroup.position.y = 0.2 + Math.sin(t * 1.4) * 0.22;
-                jetGroup.rotation.y = -Math.PI / 5 + Math.sin(t * 0.7) * 0.05;
+                // Smooth Front Jet Flight Float
+                jetGroup.position.y = 0.1 + Math.sin(t * 1.5) * 0.2;
+                jetGroup.rotation.y = -0.42 + Math.sin(t * 0.8) * 0.04;
+                jetGroup.rotation.z = -0.12 + Math.cos(t * 1.0) * 0.03;
 
-                // Radar Grid Rotation
                 gridHelper.rotation.y = t * 0.05;
 
                 renderer.render(scene, camera);
@@ -410,7 +433,7 @@ def render_3d_flight_control_hero():
     </body>
     </html>
     """
-    components.html(three_js_code, height=255)
+    components.html(three_js_code, height=260)
 
 # Render 3D Radar Hero
 render_3d_flight_control_hero()
