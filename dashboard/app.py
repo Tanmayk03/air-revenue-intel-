@@ -14,18 +14,30 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- BESPOKE MOBILE-RESPONSIVE ENTERPRISE CSS THEME ---
+# --- BESPOKE GLITCH-FREE MOBILE-RESPONSIVE CSS THEME ---
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+    /* Reset Box-Sizing & Eliminate Layout Glitches */
+    *, ::before, ::after {
+        box-sizing: border-box !important;
+    }
+
     /* Global Page Styling */
     .stApp {
         background-color: #F8FAFC;
         color: #0F172A;
         font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Fix Streamlit Container Top Gap Glitch */
+    .block-container {
+        padding-top: 1.2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 100% !important;
     }
     
     /* Hide Default Streamlit Chrome */
@@ -73,7 +85,7 @@ st.markdown("""
         border: 1px solid #E2E8F0;
         border-radius: 12px;
         padding: 14px 24px;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -205,6 +217,10 @@ st.markdown("""
         box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
 
+    .stTabs [data-baseweb="tab-panel"] {
+        padding-top: 12px !important;
+    }
+
     /* Section Cards */
     .content-card {
         background: #FFFFFF;
@@ -227,7 +243,6 @@ st.markdown("""
 
     /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 768px) {
-        /* Sidebar Menu Mobile View Optimization */
         section[data-testid="stSidebar"] {
             width: 85vw !important;
         }
@@ -294,7 +309,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# --- HIGH-DEFINITION MOBILE-RESPONSIVE AIRPLANE HUD HERO ---
+# --- GLITCH-FREE AIRPLANE HUD HERO ---
 def render_3d_hero_header():
     airplane_hud_html = """
     <!DOCTYPE html>
@@ -302,25 +317,26 @@ def render_3d_hero_header():
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {
+            html, body {
                 margin: 0;
-                overflow: hidden;
+                padding: 0;
+                overflow: hidden !important;
                 background: transparent;
                 font-family: 'Plus Jakarta Sans', sans-serif;
             }
             #hero-container {
                 width: 100%;
-                min-height: 220px;
+                height: 195px;
                 position: relative;
                 border-radius: 14px;
-                overflow: hidden;
+                overflow: hidden !important;
                 background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
                 border: 1px solid #334155;
                 box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 20px 24px;
+                padding: 16px 24px;
                 box-sizing: border-box;
             }
             .hero-left {
@@ -337,27 +353,27 @@ def render_3d_hero_header():
                 padding: 3px 10px;
                 border-radius: 4px;
                 letter-spacing: 1.5px;
-                margin-bottom: 8px;
+                margin-bottom: 6px;
                 text-transform: uppercase;
             }
             .hero-title {
                 color: #FFFFFF;
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 800;
                 letter-spacing: -0.3px;
                 margin: 0;
             }
             .hero-sub {
                 color: #94A3B8;
-                font-size: 13px;
-                margin-top: 6px;
+                font-size: 12px;
+                margin-top: 4px;
             }
             
             /* Realistic 3D Flight Telemetry Graphic */
             .flight-graphic-container {
                 position: relative;
-                width: 280px;
-                height: 170px;
+                width: 260px;
+                height: 160px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -365,8 +381,8 @@ def render_3d_hero_header():
             
             .radar-ring {
                 position: absolute;
-                width: 140px;
-                height: 140px;
+                width: 130px;
+                height: 130px;
                 border: 1px stroke rgba(56, 189, 248, 0.2);
                 border-radius: 50%;
                 border-top: 2px solid #38BDF8;
@@ -378,16 +394,16 @@ def render_3d_hero_header():
             }
 
             .airliner-svg {
-                width: 200px;
-                height: 130px;
+                width: 190px;
+                height: 120px;
                 filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
                 animation: floatFlight 3s ease-in-out infinite alternate;
                 transform: rotate(-5deg);
             }
 
             @keyframes floatFlight {
-                0% { transform: translateY(-5px) rotate(-4deg); }
-                100% { transform: translateY(8px) rotate(-7deg); }
+                0% { transform: translateY(-4px) rotate(-4deg); }
+                100% { transform: translateY(6px) rotate(-7deg); }
             }
 
             .badge-dot {
@@ -399,11 +415,11 @@ def render_3d_hero_header():
             }
             .telemetry-overlay-box {
                 position: absolute;
-                bottom: 8px;
-                right: 12px;
+                bottom: 6px;
+                right: 10px;
                 background: rgba(15, 23, 42, 0.85);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 4px 8px;
+                padding: 3px 7px;
                 border-radius: 4px;
                 color: #38BDF8;
                 font-family: monospace;
@@ -415,25 +431,26 @@ def render_3d_hero_header():
                 #hero-container {
                     flex-direction: column;
                     align-items: flex-start;
-                    padding: 16px;
+                    padding: 14px;
+                    height: auto;
                 }
                 .hero-left {
                     max-width: 100%;
-                    margin-bottom: 12px;
+                    margin-bottom: 10px;
                 }
                 .hero-title {
-                    font-size: 17px;
+                    font-size: 16px;
                 }
                 .hero-sub {
                     font-size: 11px;
                 }
                 .flight-graphic-container {
                     width: 100%;
-                    height: 130px;
+                    height: 120px;
                 }
                 .airliner-svg {
-                    width: 160px;
-                    height: 100px;
+                    width: 150px;
+                    height: 90px;
                 }
             }
         </style>
@@ -487,7 +504,7 @@ def render_3d_hero_header():
     </body>
     </html>
     """
-    components.html(airplane_hud_html, height=230)
+    components.html(airplane_hud_html, height=200)
 
 # Render Hero Header
 render_3d_hero_header()
