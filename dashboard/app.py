@@ -165,7 +165,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- THREE.JS 3D FLIGHT HERO CANVAS ---
+# --- THREE.JS HIGH-DEFINITION AIRLINER JET HERO ---
 def render_3d_hero_header():
     three_js_code = """
     <!DOCTYPE html>
@@ -180,11 +180,11 @@ def render_3d_hero_header():
             }
             #hero-container {
                 width: 100%;
-                height: 220px;
+                height: 240px;
                 position: relative;
                 border-radius: 14px;
                 overflow: hidden;
-                background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+                background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
                 border: 1px solid #334155;
                 box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
             }
@@ -252,7 +252,7 @@ def render_3d_hero_header():
     <body>
         <div id="hero-container">
             <div class="hero-overlay">
-                <div class="hero-tag">ENTERPRISE 3D FLIGHT COMMAND</div>
+                <div class="hero-tag">COMMERCIAL JET FLIGHT RADAR</div>
                 <h1 class="hero-title">Airline Revenue Leakage & Pricing Intelligence</h1>
                 <div class="hero-sub">ML Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
             </div>
@@ -267,135 +267,153 @@ def render_3d_hero_header():
             const scene = new THREE.Scene();
 
             const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.set(0, 1.8, 8.5);
+            camera.position.set(0, 2.0, 9.0);
 
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             container.appendChild(renderer.domElement);
 
-            // Lighting setup
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+            // Lighting setup for photorealistic airliner materials
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
             scene.add(ambientLight);
 
-            const sunLight = new THREE.DirectionalLight(0xF8FAFC, 2.2);
-            sunLight.position.set(8, 12, 10);
-            scene.add(sunLight);
+            const mainLight = new THREE.DirectionalLight(0xFFFFFF, 2.5);
+            mainLight.position.set(10, 15, 12);
+            scene.add(mainLight);
 
-            const fillLight = new THREE.DirectionalLight(0x38BDF8, 1.0);
-            fillLight.position.set(-8, -4, -6);
-            scene.add(fillLight);
+            const skyLight = new THREE.DirectionalLight(0x38BDF8, 1.2);
+            skyLight.position.set(-10, -5, -8);
+            scene.add(skyLight);
 
-            // Subtle Grid Floor
-            const gridHelper = new THREE.GridHelper(24, 24, 0x38BDF8, 0x334155);
-            gridHelper.position.y = -1.8;
+            // Grid Floor
+            const gridHelper = new THREE.GridHelper(26, 26, 0x38BDF8, 0x334155);
+            gridHelper.position.y = -2.0;
             scene.add(gridHelper);
 
-            // === SLEEK 3D COMMERCIAL JET AIRPLANE ===
-            const airlinerGroup = new THREE.Group();
+            // === ACCURATE COMMERCIAL PASSSENGER JET AIRPLANE ===
+            const jetGroup = new THREE.Group();
 
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, metalness: 0.6, roughness: 0.2 });
-            const blueMat = new THREE.MeshStandardMaterial({ color: 0x1E3A8A, metalness: 0.7, roughness: 0.3 });
-            const engineMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8, roughness: 0.2 });
-            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0F172A, metalness: 0.9, roughness: 0.1 });
+            const fuselageMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, metalness: 0.7, roughness: 0.2 });
+            const darkBlueMat = new THREE.MeshStandardMaterial({ color: 0x1E3A8A, metalness: 0.8, roughness: 0.2 });
+            const engineMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.9, roughness: 0.15 });
+            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0F172A, metalness: 0.95, roughness: 0.05 });
 
-            // 1. Fuselage
-            const fuseGeo = new THREE.CylinderGeometry(0.45, 0.45, 4.0, 32);
+            // 1. Main Fuselage Tube
+            const fuseGeo = new THREE.CylinderGeometry(0.5, 0.5, 4.4, 32);
             fuseGeo.rotateX(Math.PI / 2);
-            const fuselage = new THREE.Mesh(fuseGeo, bodyMat);
-            airlinerGroup.add(fuselage);
+            const fuselage = new THREE.Mesh(fuseGeo, fuselageMat);
+            jetGroup.add(fuselage);
 
-            // 2. Nose Radome Cone
-            const noseGeo = new THREE.SphereGeometry(0.45, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-            const nose = new THREE.Mesh(noseGeo, bodyMat);
+            // 2. Rounded Nose Cone Radome (Front facing +Z)
+            const noseGeo = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            const nose = new THREE.Mesh(noseGeo, fuselageMat);
             nose.rotation.x = -Math.PI / 2;
-            nose.position.set(0, 0, 2.0);
-            airlinerGroup.add(nose);
+            nose.position.set(0, 0, 2.2);
+            jetGroup.add(nose);
 
-            // 3. Cockpit Glass Window
-            const cockpitGeo = new THREE.SphereGeometry(0.455, 32, 16, 0, Math.PI, 0.3, 0.6);
+            // 3. Cockpit Windshield Wrapper
+            const cockpitGeo = new THREE.SphereGeometry(0.505, 32, 16, 0, Math.PI, 0.25, 0.55);
             const cockpit = new THREE.Mesh(cockpitGeo, glassMat);
             cockpit.rotation.x = -Math.PI / 2;
             cockpit.rotation.z = Math.PI / 2;
-            cockpit.position.set(0, 0.04, 1.75);
-            airlinerGroup.add(cockpit);
+            cockpit.position.set(0, 0.05, 1.9);
+            jetGroup.add(cockpit);
 
-            // 4. Tail Cone
-            const tailConeGeo = new THREE.ConeGeometry(0.45, 1.2, 32);
+            // 4. Tail Taper Cone
+            const tailConeGeo = new THREE.ConeGeometry(0.5, 1.3, 32);
             tailConeGeo.rotateX(-Math.PI / 2);
-            const tailCone = new THREE.Mesh(tailConeGeo, bodyMat);
-            tailCone.position.set(0, 0, -2.6);
-            airlinerGroup.add(tailCone);
+            const tailCone = new THREE.Mesh(tailConeGeo, fuselageMat);
+            tailCone.position.set(0, 0, -2.85);
+            jetGroup.add(tailCone);
 
-            // 5. Main Swept Wings
+            // 5. Main Swept Wings (Airbus / Boeing Passenger Wing Outline)
             const wingShape = new THREE.Shape();
-            wingShape.moveTo(0, 0.3);
-            wingShape.lineTo(3.6, -1.4);
-            wingShape.lineTo(3.4, -2.0);
-            wingShape.lineTo(0, -0.6);
+            wingShape.moveTo(0, 0.4);
+            wingShape.lineTo(4.2, -1.6);
+            wingShape.lineTo(3.9, -2.3);
+            wingShape.lineTo(0, -0.7);
             wingShape.closePath();
 
-            const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
+            const wingGeo = new THREE.ExtrudeGeometry(wingShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
             
-            const rightWing = new THREE.Mesh(wingGeo, bodyMat);
+            const rightWing = new THREE.Mesh(wingGeo, fuselageMat);
             rightWing.rotation.x = Math.PI / 2;
             rightWing.position.set(0, 0, 0.2);
-            airlinerGroup.add(rightWing);
+            jetGroup.add(rightWing);
 
             const leftWing = rightWing.clone();
             leftWing.scale.set(-1, 1, 1);
-            airlinerGroup.add(leftWing);
+            jetGroup.add(leftWing);
 
-            // Winglets
+            // Winglets (Wingtip Fins)
             const wingletShape = new THREE.Shape();
             wingletShape.moveTo(0, 0);
-            wingletShape.lineTo(0, 0.55);
-            wingletShape.lineTo(-0.2, 0.35);
-            wingletShape.lineTo(-0.3, 0);
+            wingletShape.lineTo(0, 0.65);
+            wingletShape.lineTo(-0.3, 0.4);
+            wingletShape.lineTo(-0.4, 0);
             wingletShape.closePath();
 
             const wingletGeo = new THREE.ExtrudeGeometry(wingletShape, { depth: 0.03, bevelEnabled: false });
-            const rWinglet = new THREE.Mesh(wingletGeo, blueMat);
-            rWinglet.position.set(3.55, 0, -1.2);
-            airlinerGroup.add(rWinglet);
+            const rWinglet = new THREE.Mesh(wingletGeo, darkBlueMat);
+            rWinglet.position.set(4.15, 0, -1.4);
+            jetGroup.add(rWinglet);
 
             const lWinglet = rWinglet.clone();
-            lWinglet.position.set(-3.55, 0, -1.2);
+            lWinglet.position.set(-4.15, 0, -1.4);
             lWinglet.scale.set(-1, 1, 1);
-            airlinerGroup.add(lWinglet);
+            jetGroup.add(lWinglet);
 
-            // 6. Turbofan Engines
-            const engineCylGeo = new THREE.CylinderGeometry(0.22, 0.2, 1.1, 24);
-            engineCylGeo.rotateX(Math.PI / 2);
+            // 6. Dual Turbofan Engines Mounted Under Wings
+            const engineGeo = new THREE.CylinderGeometry(0.26, 0.24, 1.3, 24);
+            engineGeo.rotateX(Math.PI / 2);
             
-            const rEngine = new THREE.Mesh(engineCylGeo, engineMat);
-            rEngine.position.set(1.3, -0.38, 0.1);
-            airlinerGroup.add(rEngine);
+            const rEngine = new THREE.Mesh(engineGeo, engineMat);
+            rEngine.position.set(1.5, -0.42, 0.1);
+            jetGroup.add(rEngine);
 
             const lEngine = rEngine.clone();
-            lEngine.position.set(-1.3, -0.38, 0.1);
-            airlinerGroup.add(lEngine);
+            lEngine.position.set(-1.5, -0.42, 0.1);
+            jetGroup.add(lEngine);
 
-            // 7. Vertical Tail Fin
+            // 7. Vertical Tail Fin (Blue Livery Accent)
             const tailFinShape = new THREE.Shape();
             tailFinShape.moveTo(0, 0);
-            tailFinShape.lineTo(0, 1.5);
-            tailFinShape.lineTo(-0.85, 1.2);
-            tailFinShape.lineTo(-1.4, 0);
+            tailFinShape.lineTo(0, 1.7);
+            tailFinShape.lineTo(-1.0, 1.3);
+            tailFinShape.lineTo(-1.6, 0);
             tailFinShape.closePath();
 
-            const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
-            const tailFin = new THREE.Mesh(tailFinGeo, blueMat);
-            tailFin.position.set(0, 0.3, -2.0);
-            airlinerGroup.add(tailFin);
+            const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.06, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02 });
+            const tailFin = new THREE.Mesh(tailFinGeo, darkBlueMat);
+            tailFin.position.set(0, 0.35, -2.2);
+            jetGroup.add(tailFin);
 
-            scene.add(airlinerGroup);
+            // Horizontal Stabilizers
+            const hTailShape = new THREE.Shape();
+            hTailShape.moveTo(0, 0);
+            hTailShape.lineTo(1.5, -0.65);
+            hTailShape.lineTo(1.4, -1.0);
+            hTailShape.lineTo(0, -0.45);
+            hTailShape.closePath();
 
-            // 3D Airplane Positioning
-            airlinerGroup.position.set(2.7, 0.1, 0.4);
-            airlinerGroup.rotation.y = -0.52;
-            airlinerGroup.rotation.x = 0.22;
-            airlinerGroup.rotation.z = -0.12;
+            const hTailGeo = new THREE.ExtrudeGeometry(hTailShape, { depth: 0.04, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.01 });
+            const rHTail = new THREE.Mesh(hTailGeo, fuselageMat);
+            rHTail.rotation.x = Math.PI / 2;
+            rHTail.position.set(0, 0.1, -2.5);
+            jetGroup.add(rHTail);
+
+            const lHTail = rHTail.clone();
+            lHTail.scale.set(-1, 1, 1);
+            jetGroup.add(lHTail);
+
+            scene.add(jetGroup);
+
+            // 3D Airplane View Angle (Unmistakable Commercial Jet Perspective)
+            jetGroup.position.set(3.0, 0.1, 0.5);
+            jetGroup.rotation.y = -0.55; // 3/4 Side-front angle showing full aircraft body
+            jetGroup.rotation.x = 0.24;  // Slight climb pitch angle
+            jetGroup.rotation.z = -0.14; // Banking turn angle
 
             // Render Loop
             let clock = new THREE.Clock();
@@ -403,10 +421,10 @@ def render_3d_hero_header():
                 requestAnimationFrame(animate);
                 const t = clock.getElapsedTime();
 
-                // Flight Motion
-                airlinerGroup.position.y = 0.1 + Math.sin(t * 1.4) * 0.16;
-                airlinerGroup.rotation.y = -0.52 + Math.sin(t * 0.6) * 0.03;
-                airlinerGroup.rotation.z = -0.12 + Math.cos(t * 0.8) * 0.02;
+                // Floating Flight Oscillations
+                jetGroup.position.y = 0.1 + Math.sin(t * 1.3) * 0.18;
+                jetGroup.rotation.y = -0.55 + Math.sin(t * 0.6) * 0.03;
+                jetGroup.rotation.z = -0.14 + Math.cos(t * 0.8) * 0.02;
 
                 gridHelper.rotation.y = t * 0.03;
 
@@ -424,7 +442,7 @@ def render_3d_hero_header():
     </body>
     </html>
     """
-    components.html(three_js_code, height=230)
+    components.html(three_js_code, height=245)
 
 # Render 3D Hero Header
 render_3d_hero_header()
