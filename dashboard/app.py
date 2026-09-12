@@ -227,6 +227,20 @@ st.markdown("""
 
     /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 768px) {
+        /* Sidebar Menu Mobile View Optimization */
+        section[data-testid="stSidebar"] {
+            width: 85vw !important;
+        }
+
+        .sidebar-brand {
+            padding: 12px 8px;
+            margin-bottom: 12px;
+        }
+
+        .brand-title {
+            font-size: 14px;
+        }
+
         .top-navbar {
             flex-direction: column;
             align-items: flex-start;
