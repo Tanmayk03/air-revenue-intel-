@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- BESPOKE HUMAN-CRAFTED ENTERPRISE CSS THEME ---
+# --- BESPOKE MOBILE-RESPONSIVE ENTERPRISE CSS THEME ---
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,6 +65,68 @@ st.markdown("""
         font-weight: 700;
         padding: 2px 6px;
         border-radius: 4px;
+    }
+
+    /* Top Executive Navigation Bar */
+    .top-navbar {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 14px 24px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: #0F172A;
+        letter-spacing: -0.4px;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ECFDF5;
+        border: 1px solid #A7F3D0;
+        color: #047857;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #10B981;
+        border-radius: 50%;
+    }
+
+    .model-badge {
+        background: #F1F5F9;
+        border: 1px solid #CBD5E1;
+        color: #475569;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 6px;
     }
 
     /* Executive KPI Cards */
@@ -162,15 +224,69 @@ st.markdown("""
         align-items: center;
         justify-content: space-between;
     }
+
+    /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
+    @media (max-width: 768px) {
+        .top-navbar {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+        }
+
+        .nav-title {
+            font-size: 15px;
+        }
+
+        .nav-right {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .kpi-card {
+            padding: 14px 14px;
+            margin-bottom: 12px;
+        }
+
+        .kpi-value {
+            font-size: 22px;
+        }
+
+        .stTabs [data-baseweb="tab-list"] {
+            overflow-x: auto;
+            flex-wrap: nowrap;
+        }
+
+        .stTabs [data-baseweb="tab"] {
+            font-size: 12px;
+            padding: 6px 12px;
+            white-space: nowrap;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- HIGH-DEFINITION ANIMATED COMMERCIAL AIRPLANE HUD HERO ---
+# --- TOP EXECUTIVE NAVIGATION BAR ---
+st.markdown("""
+<div class="top-navbar">
+    <div class="nav-left">
+        <div class="nav-title">Airline Revenue & Pricing Intelligence</div>
+        <span class="brand-badge">v3.2 PROD</span>
+    </div>
+    <div class="nav-right">
+        <div class="status-pill"><span class="status-dot"></span> 300,153 FLIGHTS AUDITED</div>
+        <div class="model-badge">ML BENCHMARK R² 91.29%</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# --- HIGH-DEFINITION MOBILE-RESPONSIVE AIRPLANE HUD HERO ---
 def render_3d_hero_header():
     airplane_hud_html = """
     <!DOCTYPE html>
     <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             body {
                 margin: 0;
@@ -180,7 +296,7 @@ def render_3d_hero_header():
             }
             #hero-container {
                 width: 100%;
-                height: 220px;
+                min-height: 220px;
                 position: relative;
                 border-radius: 14px;
                 overflow: hidden;
@@ -190,11 +306,11 @@ def render_3d_hero_header():
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0 30px;
+                padding: 20px 24px;
                 box-sizing: border-box;
             }
             .hero-left {
-                max-width: 55%;
+                max-width: 58%;
                 z-index: 10;
             }
             .hero-tag {
@@ -226,18 +342,17 @@ def render_3d_hero_header():
             /* Realistic 3D Flight Telemetry Graphic */
             .flight-graphic-container {
                 position: relative;
-                width: 320px;
-                height: 180px;
+                width: 280px;
+                height: 170px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
             
-            /* Radar Compass Ring */
             .radar-ring {
                 position: absolute;
-                width: 160px;
-                height: 160px;
+                width: 140px;
+                height: 140px;
                 border: 1px stroke rgba(56, 189, 248, 0.2);
                 border-radius: 50%;
                 border-top: 2px solid #38BDF8;
@@ -248,10 +363,9 @@ def render_3d_hero_header():
                 100% { transform: rotate(360deg); }
             }
 
-            /* Floating Airliner Graphic */
             .airliner-svg {
-                width: 220px;
-                height: 140px;
+                width: 200px;
+                height: 130px;
                 filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
                 animation: floatFlight 3s ease-in-out infinite alternate;
                 transform: rotate(-5deg);
@@ -262,19 +376,8 @@ def render_3d_hero_header():
                 100% { transform: translateY(8px) rotate(-7deg); }
             }
 
-            .badge-pill {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                background: #064E3B;
-                border: 1px solid #059669;
-                color: #34D399;
-                font-size: 11px;
-                font-weight: 700;
-                padding: 4px 10px;
-                border-radius: 6px;
-            }
             .badge-dot {
+                display: inline-block;
                 width: 6px;
                 height: 6px;
                 background-color: #34D399;
@@ -282,15 +385,42 @@ def render_3d_hero_header():
             }
             .telemetry-overlay-box {
                 position: absolute;
-                bottom: 10px;
-                right: 20px;
-                background: rgba(15, 23, 42, 0.8);
+                bottom: 8px;
+                right: 12px;
+                background: rgba(15, 23, 42, 0.85);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 4px 10px;
+                padding: 4px 8px;
                 border-radius: 4px;
                 color: #38BDF8;
                 font-family: monospace;
                 font-size: 10px;
+            }
+
+            /* Mobile Responsive Layout for Header */
+            @media (max-width: 768px) {
+                #hero-container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    padding: 16px;
+                }
+                .hero-left {
+                    max-width: 100%;
+                    margin-bottom: 12px;
+                }
+                .hero-title {
+                    font-size: 17px;
+                }
+                .hero-sub {
+                    font-size: 11px;
+                }
+                .flight-graphic-container {
+                    width: 100%;
+                    height: 130px;
+                }
+                .airliner-svg {
+                    width: 160px;
+                    height: 100px;
+                }
             }
         </style>
     </head>
@@ -305,41 +435,30 @@ def render_3d_hero_header():
             <div class="flight-graphic-container">
                 <div class="radar-ring"></div>
                 
-                <!-- CRYSTAL CLEAR COMMERCIAL JET AIRLINER SVG -->
                 <svg class="airliner-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Flight Vapor Trail -->
                     <path d="M40 320 C 120 300, 200 280, 300 260" stroke="#38BDF8" stroke-width="3" stroke-dasharray="6 6" opacity="0.6"/>
                     
-                    <!-- Commercial Jet Main Fuselage & Wings (Detailed Boeing/Airbus Silhouette) -->
                     <g transform="translate(60, 80) scale(0.75)">
-                        <!-- Main Swept Wings -->
                         <path d="M 240 180 L 100 320 L 130 335 L 260 210 Z" fill="#2563EB"/>
                         <path d="M 260 170 L 400 320 L 370 335 L 240 200 Z" fill="#1D4ED8"/>
                         
-                        <!-- Winglets -->
                         <path d="M 100 320 L 95 300 L 115 325 Z" fill="#38BDF8"/>
                         <path d="M 400 320 L 405 300 L 385 325 Z" fill="#38BDF8"/>
                         
-                        <!-- Main Fuselage Tube -->
                         <path d="M 250 40 C 275 40, 280 120, 280 340 C 280 380, 250 410, 250 410 C 250 410, 220 380, 220 340 C 220 120, 225 40, 250 40 Z" fill="#F8FAFC"/>
                         
-                        <!-- Nose Radome Cone Tint -->
                         <path d="M 250 40 C 265 40, 275 70, 275 100 L 225 100 C 225 70, 235 40, 250 40 Z" fill="#E2E8F0"/>
                         
-                        <!-- Cockpit Glass Windows -->
                         <path d="M 235 85 C 240 80, 260 80, 265 85 L 270 95 L 230 95 Z" fill="#0F172A"/>
                         
-                        <!-- Dual Jet Turbofan Engines under wings -->
                         <rect x="170" y="240" width="22" height="55" rx="10" fill="#334155"/>
                         <rect x="308" y="240" width="22" height="55" rx="10" fill="#334155"/>
                         <circle cx="181" cy="245" r="9" fill="#38BDF8"/>
                         <circle cx="319" cy="245" r="9" fill="#38BDF8"/>
                         
-                        <!-- Horizontal Tail Stabilizers -->
                         <path d="M 250 360 L 160 410 L 170 425 L 250 385 Z" fill="#94A3B8"/>
                         <path d="M 250 360 L 340 410 L 330 425 L 250 385 Z" fill="#64748B"/>
                         
-                        <!-- Vertical Tail Fin (Blue Livery) -->
                         <path d="M 250 310 L 250 420 L 244 420 L 244 310 Z" fill="#1E3A8A"/>
                         <path d="M 250 330 L 250 420 L 256 420 L 250 330 Z" fill="#2563EB"/>
                     </g>
@@ -443,7 +562,7 @@ with k1:
             <span class="kpi-pill" style="background: #F1F5F9; color: #475569;">100% Volume</span>
         </div>
         <div class="kpi-value">{total_flights:,}</div>
-        <div class="kpi-subtext">Evaluated Domestic Flight Segment</div>
+        <div class="kpi-subtext">Evaluated Domestic Segment</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -465,11 +584,11 @@ with k3:
     st.markdown(f"""
     <div class="kpi-card">
         <div class="kpi-header">
-            <span class="kpi-label">Benchmark Fare & Leakage</span>
+            <span class="kpi-label">Benchmark & Leakage</span>
             <span class="kpi-pill" style="background: {leak_bg}; color: {leak_fg};">{overall_leakage:+.2f}%</span>
         </div>
         <div class="kpi-value">₹{avg_expected:,.0f}</div>
-        <div class="kpi-subtext">ML Benchmark Baseline Price</div>
+        <div class="kpi-subtext">ML Benchmark Baseline</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -481,7 +600,7 @@ with k4:
             <span class="kpi-pill" style="background: #ECFDF5; color: #059669;">Target Upside</span>
         </div>
         <div class="kpi-value" style="color: #059669;">₹{total_exposure_crs:.2f} Cr</div>
-        <div class="kpi-subtext">Uncaptured Revenue Exposure</div>
+        <div class="kpi-subtext">Uncaptured Exposure</div>
     </div>
     """, unsafe_allow_html=True)
 
