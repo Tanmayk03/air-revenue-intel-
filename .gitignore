@@ -1,0 +1,19 @@
+# Byte-compiled / Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Data files (Exclude large raw zip if needed, keep structure)
+archive.zip
+
+# Operating System files
+.DS_Store
+Thumbs.db
