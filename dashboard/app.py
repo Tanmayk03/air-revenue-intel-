@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import streamlit.components.v1 as components
 import os
 
 # --- PAGE CONFIGURATION ---
@@ -14,33 +13,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- BESPOKE GLITCH-FREE MOBILE-RESPONSIVE CSS THEME ---
+# --- NATIVE BUG-FREE ENTERPRISE CSS THEME ---
 st.markdown("""
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-    /* Reset Box-Sizing & Eliminate Layout Glitches */
+    /* Reset & Prevent Any Layout Glitches */
     *, ::before, ::after {
         box-sizing: border-box !important;
     }
 
-    /* Global Page Styling */
+    /* Global Page Theme - Clean Executive Light Mode */
     .stApp {
         background-color: #F8FAFC;
         color: #0F172A;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Fix Streamlit Container Top Gap Glitch */
+    /* Clean Container Padding */
     .block-container {
-        padding-top: 1.2rem !important;
+        padding-top: 1.5rem !important;
         padding-bottom: 2rem !important;
-        max-width: 100% !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
     }
     
-    /* Hide Default Streamlit Chrome */
+    /* Hide Default Streamlit Elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -49,7 +49,7 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background: #FFFFFF !important;
         border-right: 1px solid #E2E8F0 !important;
-        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.02);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
     }
     
     .sidebar-brand {
@@ -64,9 +64,6 @@ st.markdown("""
         font-weight: 800;
         color: #1E293B;
         letter-spacing: -0.3px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
     }
 
     .brand-badge {
@@ -77,126 +74,85 @@ st.markdown("""
         font-weight: 700;
         padding: 2px 6px;
         border-radius: 4px;
+        margin-left: 6px;
     }
 
-    /* Top Executive Navigation Bar */
-    .top-navbar {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 14px 24px;
-        margin-bottom: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    /* Native Hero Banner Card */
+    .hero-card {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        border-radius: 14px;
+        padding: 24px 28px;
+        margin-bottom: 24px;
+        color: #FFFFFF;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
+        position: relative;
     }
 
-    .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .nav-title {
-        font-size: 18px;
-        font-weight: 800;
-        color: #0F172A;
-        letter-spacing: -0.4px;
-    }
-
-    .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: #ECFDF5;
-        border: 1px solid #A7F3D0;
-        color: #047857;
-        font-size: 12px;
+    .hero-tag {
+        display: inline-block;
+        background: rgba(56, 189, 248, 0.15);
+        border: 1px solid #38BDF8;
+        color: #38BDF8;
+        font-size: 10px;
         font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 20px;
+        padding: 3px 10px;
+        border-radius: 4px;
+        letter-spacing: 1.2px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
     }
 
-    .status-dot {
-        width: 6px;
-        height: 6px;
-        background-color: #10B981;
-        border-radius: 50%;
+    .hero-title {
+        font-size: 22px;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -0.4px;
+        color: #FFFFFF;
     }
 
-    .model-badge {
-        background: #F1F5F9;
-        border: 1px solid #CBD5E1;
-        color: #475569;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 6px;
+    .hero-sub {
+        font-size: 13px;
+        color: #94A3B8;
+        margin-top: 4px;
     }
 
-    /* Executive KPI Cards */
+    /* Native KPI Cards */
     .kpi-card {
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 12px;
-        padding: 18px 20px;
+        padding: 16px 18px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        transition: all 0.2s ease;
-        position: relative;
-    }
-
-    .kpi-card:hover {
-        border-color: #CBD5E1;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-
-    .kpi-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
     }
 
     .kpi-label {
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 11px;
+        font-weight: 700;
         color: #64748B;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-    }
-
-    .kpi-pill {
-        font-size: 11px;
-        font-weight: 700;
-        padding: 2px 8px;
-        border-radius: 12px;
+        margin-bottom: 6px;
     }
 
     .kpi-value {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 800;
         color: #0F172A;
         letter-spacing: -0.5px;
     }
 
     .kpi-subtext {
-        font-size: 12px;
+        font-size: 11px;
         color: #94A3B8;
         margin-top: 4px;
     }
 
     /* Tabs Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 6px;
         background: #F1F5F9;
-        padding: 5px;
+        padding: 4px;
         border-radius: 10px;
         border: 1px solid #E2E8F0;
     }
@@ -218,17 +174,7 @@ st.markdown("""
     }
 
     .stTabs [data-baseweb="tab-panel"] {
-        padding-top: 12px !important;
-    }
-
-    /* Section Cards */
-    .content-card {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        padding-top: 14px !important;
     }
 
     .card-title {
@@ -236,278 +182,33 @@ st.markdown("""
         font-weight: 700;
         color: #0F172A;
         margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
     }
 
-    /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
+    /* Mobile Responsive Tweaks */
     @media (max-width: 768px) {
-        section[data-testid="stSidebar"] {
-            width: 85vw !important;
+        .block-container {
+            padding-top: 1rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
         }
-
-        .sidebar-brand {
-            padding: 12px 8px;
-            margin-bottom: 12px;
+        .hero-title {
+            font-size: 18px;
         }
-
-        .brand-title {
-            font-size: 14px;
-        }
-
-        .top-navbar {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 16px;
-        }
-
-        .nav-title {
-            font-size: 15px;
-        }
-
-        .nav-right {
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .kpi-card {
-            padding: 14px 14px;
-            margin-bottom: 12px;
-        }
-
         .kpi-value {
             font-size: 22px;
-        }
-
-        .stTabs [data-baseweb="tab-list"] {
-            overflow-x: auto;
-            flex-wrap: nowrap;
-        }
-
-        .stTabs [data-baseweb="tab"] {
-            font-size: 12px;
-            padding: 6px 12px;
-            white-space: nowrap;
         }
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- TOP EXECUTIVE NAVIGATION BAR ---
+# --- HERO EXECUTIVE BANNER CARD ---
 st.markdown("""
-<div class="top-navbar">
-    <div class="nav-left">
-        <div class="nav-title">Airline Revenue & Pricing Intelligence</div>
-        <span class="brand-badge">v3.2 PROD</span>
-    </div>
-    <div class="nav-right">
-        <div class="status-pill"><span class="status-dot"></span> 300,153 FLIGHTS AUDITED</div>
-        <div class="model-badge">ML BENCHMARK R² 91.29%</div>
-    </div>
+<div class="hero-card">
+    <div class="hero-tag">AIRLINE PRICING BENCHMARK PLATFORM</div>
+    <h1 class="hero-title">Airline Revenue Leakage & Pricing Intelligence Console</h1>
+    <div class="hero-sub">Machine Learning Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
 </div>
 """, unsafe_allow_html=True)
-
-# --- GLITCH-FREE AIRPLANE HUD HERO ---
-def render_3d_hero_header():
-    airplane_hud_html = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            html, body {
-                margin: 0;
-                padding: 0;
-                overflow: hidden !important;
-                background: transparent;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-            }
-            #hero-container {
-                width: 100%;
-                height: 195px;
-                position: relative;
-                border-radius: 14px;
-                overflow: hidden !important;
-                background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-                border: 1px solid #334155;
-                box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 16px 24px;
-                box-sizing: border-box;
-            }
-            .hero-left {
-                max-width: 58%;
-                z-index: 10;
-            }
-            .hero-tag {
-                display: inline-block;
-                background: rgba(56, 189, 248, 0.15);
-                border: 1px solid #38BDF8;
-                color: #38BDF8;
-                font-size: 10px;
-                font-weight: 700;
-                padding: 3px 10px;
-                border-radius: 4px;
-                letter-spacing: 1.5px;
-                margin-bottom: 6px;
-                text-transform: uppercase;
-            }
-            .hero-title {
-                color: #FFFFFF;
-                font-size: 20px;
-                font-weight: 800;
-                letter-spacing: -0.3px;
-                margin: 0;
-            }
-            .hero-sub {
-                color: #94A3B8;
-                font-size: 12px;
-                margin-top: 4px;
-            }
-            
-            /* Realistic 3D Flight Telemetry Graphic */
-            .flight-graphic-container {
-                position: relative;
-                width: 260px;
-                height: 160px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .radar-ring {
-                position: absolute;
-                width: 130px;
-                height: 130px;
-                border: 1px stroke rgba(56, 189, 248, 0.2);
-                border-radius: 50%;
-                border-top: 2px solid #38BDF8;
-                animation: spin 8s linear infinite;
-            }
-            
-            @keyframes spin {
-                100% { transform: rotate(360deg); }
-            }
-
-            .airliner-svg {
-                width: 190px;
-                height: 120px;
-                filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-                animation: floatFlight 3s ease-in-out infinite alternate;
-                transform: rotate(-5deg);
-            }
-
-            @keyframes floatFlight {
-                0% { transform: translateY(-4px) rotate(-4deg); }
-                100% { transform: translateY(6px) rotate(-7deg); }
-            }
-
-            .badge-dot {
-                display: inline-block;
-                width: 6px;
-                height: 6px;
-                background-color: #34D399;
-                border-radius: 50%;
-            }
-            .telemetry-overlay-box {
-                position: absolute;
-                bottom: 6px;
-                right: 10px;
-                background: rgba(15, 23, 42, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 3px 7px;
-                border-radius: 4px;
-                color: #38BDF8;
-                font-family: monospace;
-                font-size: 10px;
-            }
-
-            /* Mobile Responsive Layout for Header */
-            @media (max-width: 768px) {
-                #hero-container {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    padding: 14px;
-                    height: auto;
-                }
-                .hero-left {
-                    max-width: 100%;
-                    margin-bottom: 10px;
-                }
-                .hero-title {
-                    font-size: 16px;
-                }
-                .hero-sub {
-                    font-size: 11px;
-                }
-                .flight-graphic-container {
-                    width: 100%;
-                    height: 120px;
-                }
-                .airliner-svg {
-                    width: 150px;
-                    height: 90px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div id="hero-container">
-            <div class="hero-left">
-                <div class="hero-tag">COMMERCIAL FLIGHT TELEMETRY HUD</div>
-                <h1 class="hero-title">Airline Revenue Leakage & Pricing Intelligence</h1>
-                <div class="hero-sub">ML Expected Fare Benchmark | Exposure & Dynamic Yield Analytics</div>
-            </div>
-            
-            <div class="flight-graphic-container">
-                <div class="radar-ring"></div>
-                
-                <svg class="airliner-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M40 320 C 120 300, 200 280, 300 260" stroke="#38BDF8" stroke-width="3" stroke-dasharray="6 6" opacity="0.6"/>
-                    
-                    <g transform="translate(60, 80) scale(0.75)">
-                        <path d="M 240 180 L 100 320 L 130 335 L 260 210 Z" fill="#2563EB"/>
-                        <path d="M 260 170 L 400 320 L 370 335 L 240 200 Z" fill="#1D4ED8"/>
-                        
-                        <path d="M 100 320 L 95 300 L 115 325 Z" fill="#38BDF8"/>
-                        <path d="M 400 320 L 405 300 L 385 325 Z" fill="#38BDF8"/>
-                        
-                        <path d="M 250 40 C 275 40, 280 120, 280 340 C 280 380, 250 410, 250 410 C 250 410, 220 380, 220 340 C 220 120, 225 40, 250 40 Z" fill="#F8FAFC"/>
-                        
-                        <path d="M 250 40 C 265 40, 275 70, 275 100 L 225 100 C 225 70, 235 40, 250 40 Z" fill="#E2E8F0"/>
-                        
-                        <path d="M 235 85 C 240 80, 260 80, 265 85 L 270 95 L 230 95 Z" fill="#0F172A"/>
-                        
-                        <rect x="170" y="240" width="22" height="55" rx="10" fill="#334155"/>
-                        <rect x="308" y="240" width="22" height="55" rx="10" fill="#334155"/>
-                        <circle cx="181" cy="245" r="9" fill="#38BDF8"/>
-                        <circle cx="319" cy="245" r="9" fill="#38BDF8"/>
-                        
-                        <path d="M 250 360 L 160 410 L 170 425 L 250 385 Z" fill="#94A3B8"/>
-                        <path d="M 250 360 L 340 410 L 330 425 L 250 385 Z" fill="#64748B"/>
-                        
-                        <path d="M 250 310 L 250 420 L 244 420 L 244 310 Z" fill="#1E3A8A"/>
-                        <path d="M 250 330 L 250 420 L 256 420 L 250 330 Z" fill="#2563EB"/>
-                    </g>
-                </svg>
-
-                <div class="telemetry-overlay-box">
-                    <div><span class="badge-dot"></span> 300,153 FLIGHTS</div>
-                    <div style="color: #94A3B8; margin-top: 2px;">MODEL R²: 91.29%</div>
-                </div>
-            </div>
-        </div>
-    </body>
-    </html>
-    """
-    components.html(airplane_hud_html, height=200)
-
-# Render Hero Header
-render_3d_hero_header()
 
 # --- DATA LOADING WITH CACHING ---
 @st.cache_data
@@ -528,7 +229,7 @@ except Exception as e:
 with st.sidebar:
     st.markdown("""
     <div class="sidebar-brand">
-        <div class="brand-title">Pricing Intelligence <span class="brand-badge">PRO</span></div>
+        <div class="brand-title">Pricing Intel <span class="brand-badge">PRO</span></div>
         <div style="font-size: 11px; color: #64748B; margin-top: 4px;">Executive Analytics Suite</div>
     </div>
     """, unsafe_allow_html=True)
@@ -588,37 +289,27 @@ k1, k2, k3, k4 = st.columns(4)
 with k1:
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-header">
-            <span class="kpi-label">Audited Flights</span>
-            <span class="kpi-pill" style="background: #F1F5F9; color: #475569;">100% Volume</span>
-        </div>
+        <div class="kpi-label">Audited Flights</div>
         <div class="kpi-value">{total_flights:,}</div>
-        <div class="kpi-subtext">Evaluated Domestic Segment</div>
+        <div class="kpi-subtext">Evaluated Flight Volume</div>
     </div>
     """, unsafe_allow_html=True)
 
 with k2:
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-header">
-            <span class="kpi-label">Avg Realized Fare</span>
-            <span class="kpi-pill" style="background: #EFF6FF; color: #2563EB;">Actual</span>
-        </div>
+        <div class="kpi-label">Avg Realized Fare</div>
         <div class="kpi-value">₹{avg_actual:,.0f}</div>
         <div class="kpi-subtext">Realized Ticket Average</div>
     </div>
     """, unsafe_allow_html=True)
 
 with k3:
-    leak_bg = "#FEF2F2" if overall_leakage < 0 else "#ECFDF5"
-    leak_fg = "#DC2626" if overall_leakage < 0 else "#059669"
+    leak_color = "#DC2626" if overall_leakage < 0 else "#059669"
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-header">
-            <span class="kpi-label">Benchmark & Leakage</span>
-            <span class="kpi-pill" style="background: {leak_bg}; color: {leak_fg};">{overall_leakage:+.2f}%</span>
-        </div>
-        <div class="kpi-value">₹{avg_expected:,.0f}</div>
+        <div class="kpi-label">Benchmark & Leakage Score</div>
+        <div class="kpi-value" style="color: {leak_color};">₹{avg_expected:,.0f} ({overall_leakage:+.1f}%)</div>
         <div class="kpi-subtext">ML Benchmark Baseline</div>
     </div>
     """, unsafe_allow_html=True)
@@ -626,12 +317,9 @@ with k3:
 with k4:
     st.markdown(f"""
     <div class="kpi-card">
-        <div class="kpi-header">
-            <span class="kpi-label">Revenue Opportunity</span>
-            <span class="kpi-pill" style="background: #ECFDF5; color: #059669;">Target Upside</span>
-        </div>
+        <div class="kpi-label">Revenue Opportunity</div>
         <div class="kpi-value" style="color: #059669;">₹{total_exposure_crs:.2f} Cr</div>
-        <div class="kpi-subtext">Uncaptured Exposure</div>
+        <div class="kpi-subtext">Uncaptured Exposure Upside</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -665,7 +353,7 @@ with tab1:
     col_a, col_b = st.columns(2)
     
     with col_a:
-        st.markdown('<div class="card-title">Top Exposure Routes <span>(₹ Lakhs)</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Top Exposure Routes (₹ Lakhs)</div>', unsafe_allow_html=True)
         route_exp = filtered_df.groupby('route').apply(
             lambda g: (g[g['expected_fare'] > g['price']]['expected_fare'] - g[g['expected_fare'] > g['price']]['price']).sum() / 100000
         ).reset_index(name='exposure_lakhs').sort_values(by='exposure_lakhs', ascending=False).head(10)
@@ -681,7 +369,7 @@ with tab1:
         st.plotly_chart(fig1, use_container_width=True)
 
     with col_b:
-        st.markdown('<div class="card-title">Leakage Score by Booking Window <span>(%)</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Leakage Score by Booking Window (%)</div>', unsafe_allow_html=True)
         bucket_summary = filtered_df.groupby('days_bucket').agg(
             avg_actual=('price', 'mean'),
             avg_expected=('expected_fare', 'mean')
@@ -697,7 +385,7 @@ with tab1:
         fig2 = style_plotly(fig2)
         st.plotly_chart(fig2, use_container_width=True)
 
-    # Clean Styled Executive Data Table
+    # Executive Data Table
     st.markdown('<div class="card-title">High-Exposure Route Detail Matrix</div>', unsafe_allow_html=True)
     table_df = filtered_df.groupby(['route', 'days_bucket']).agg(
         Flights=('price', 'count'),
